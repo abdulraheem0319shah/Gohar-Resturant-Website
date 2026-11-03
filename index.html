@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en-PK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% set seo_titles = {
+    'home': 'Gohar Restaurant | BBQ, Karahi & Family Dining in Karachi',
+    'popular': 'Popular Dishes | Gohar Restaurant Karachi',
+    'menu': 'Restaurant Menu & Prices | Gohar Restaurant Karachi',
+    'about': 'Location, Hours & Delivery | Gohar Restaurant Karachi',
+    'reviews': 'Customer Reviews | Gohar Restaurant Karachi'
+  } %}
+  {% set seo_descriptions = {
+    'home': 'Visit Gohar Restaurant in Orangi Town, Karachi, serving BBQ, karahi, handi, burgers and more since 1993. Explore the menu, order or reserve a table.',
+    'popular': 'Explore customer favorites at Gohar Restaurant in Orangi Town, Karachi, including BBQ, broast, burgers, rice and desserts.',
+    'menu': 'Browse the categorized food menu and listed prices at Gohar Restaurant, Orangi Town, Karachi. Choose from BBQ, karahi, handi, burgers and more.',
+    'about': 'Find Gohar Restaurant at Iqbal Market Road, Sector 11, Orangi Town, Karachi. Check opening hours, delivery information and contact details.',
+    'reviews': 'Read and share customer experiences at Gohar Restaurant in Orangi Town, Karachi.'
+  } %}
+  {% set canonical_url = (config['PUBLIC_BASE_URL'] or request.url_root.rstrip('/')) ~ request.path %}
+  {% set seo_title = seo_titles.get(page, seo_titles['home']) %}
+  {% set seo_description = seo_descriptions.get(page, seo_descriptions['home']) %}
+  {% set restaurant_logo_url = (config['PUBLIC_BASE_URL'] or request.url_root.rstrip('/')) ~ '/logo.png' %}
+  <title>{{ seo_title }}</title>
+  <meta name="description" content="{{ seo_description }}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_PK">
+  <meta property="og:site_name" content="Gohar Restaurant">
+  <meta property="og:title" content="{{ seo_title }}">
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:image" content="{{ restaurant_logo_url }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ seo_title }}">
+  <meta name="twitter:description" content="{{ seo_description }}">
+
+  <script type="application/ld+json">
+    {{ {
+      '@context': 'https://schema.org',
+      '@type': 'Restaurant',
+      'name': 'Gohar Restaurant',
+      'alternateName': 'گوھر ریسٹورینٹ',
+      'url': canonical_url,
+      'image': restaurant_logo_url,
+      'logo': restaurant_logo_url,
+      'telephone': '+923339229300',
+      'priceRange': 'PKR 25-3,200',
+      'servesCuisine': ['Pakistani', 'Barbecue', 'Chinese'],
+      'foundingDate': '1993',
+      'hasMenu': (config['PUBLIC_BASE_URL'] or request.url_root.rstrip('/')) ~ '/menu',
+      'address': {
+        '@type': 'PostalAddress',
+        'streetAddress': 'Iqbal Market Road, Sector 11, near Khuda Buksh Bakers, Orangi Town',
+        'addressLocality': 'Karachi',
+        'addressRegion': 'Sindh',
+        'addressCountry': 'PK'
+      }
+    } | tojson }}
+  </script>
+
+  <!-- Favicon using Gohar Restaurant Logo -->
+  <link rel="icon" type="image/png" href="logo.png">
+  
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=31">
+  <script>
+    try {
+      const markedAt = Number(sessionStorage.getItem('gohar_skip_welcome_once'));
+      const isInternalNavigation = Number.isFinite(markedAt) && Date.now() - markedAt < 10000;
+      if (!isInternalNavigation) {
+        document.documentElement.classList.add('needs-order-setup');
+      }
+    } catch {
+      document.documentElement.classList.add('needs-order-setup');
+    }
+  </script>
+</head>
+<body data-page="{{ page }}">
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+    <symbol id="icon-crown" viewBox="0 0 24 24"><path d="m2 8 5 4 5-7 5 7 5-4-2 12H4L2 8Z"/><path d="M4 17h16"/></symbol>
+    <symbol id="icon-fire" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-3-2-5-4-7 0 3-2 4-2 4 0-5-3-8-6-10 1 5-2 7-2 12a7 7 0 0 0 7 8Z"/><path d="M12 22a3 3 0 0 0 3-3c0-1-1-2-2-3 0 2-1 2-1 2 0-2-1-3-2-4 0 2-1 3-1 5a3 3 0 0 0 3 3Z"/></symbol>
+    <symbol id="icon-utensils" viewBox="0 0 24 24"><path d="M7 3v7M4 3v4a3 3 0 0 0 6 0V3M7 10v11M16 3v18M16 3c3 2 4 5 4 8h-4"/></symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="icon-map" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M5 3h4l2 5-3 2a16 16 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2Z"/></symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24"><path d="M3 6h11v12H3zM14 10h4l3 3v5h-7z"/><circle cx="7.5" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="icon-cart" viewBox="0 0 24 24"><path d="M3 3h2l2.5 12h11L21 7H6M9 19h.01M18 19h.01"/><circle cx="9" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/></symbol>
+    <symbol id="icon-cash" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 10h.01M17 15h.01M12 10a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/></symbol>
+    <symbol id="icon-receipt" viewBox="0 0 24 24"><path d="M5 3h14v18l-3-2-4 2-4-2-3 2V3Z"/><path d="M8 8h8M8 12h8M8 16h4"/></symbol>
+    <symbol id="icon-printer" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6zM18 12h.01"/></symbol>
+  </svg>
+
+  <div id="welcomeLoader" class="welcome-loader" hidden aria-live="polite">
+    <video class="welcome-loader-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="video1.mp4" type="video/mp4">
+    </video>
+    <div class="welcome-loader-shade"></div>
+    <div class="welcome-loader-content">
+      <img src="logo.png" alt="Gohar Restaurant" class="welcome-loader-logo">
+      <p class="welcome-loader-name">GOHAR RESTAURANT</p>
+      <span class="welcome-loader-est">EST. 1993 · KARACHI</span>
+      <div class="welcome-loader-progress" aria-hidden="true"><span></span></div>
+      <p class="welcome-loader-message">Preparing your table...</p>
+    </div>
+  </div>
+
+  <section id="orderSetup" class="order-setup-screen" role="dialog" aria-modal="true"
+    aria-labelledby="orderSetupTitle" hidden>
+    <div class="order-setup-card">
+      <img src="logo.png" alt="" class="order-setup-logo">
+      <span class="section-badge">WELCOME TO GOHAR</span>
+      <h2 id="orderSetupTitle" class="order-setup-title">Where should we serve you?</h2>
+      <p class="order-setup-copy">Choose your Karachi area and how you would like to receive your order. Delivery availability may be confirmed by the restaurant.</p>
+
+      <form id="orderSetupForm">
+        <div class="form-group">
+          <label class="form-label" for="customerArea">Select your area in Karachi</label>
+          <select id="customerArea" class="form-control" required>
+            <option value="">Choose your area</option>
+            <optgroup label="Central Karachi">
+              <option>North Nazimabad</option><option>North Karachi</option><option>New Karachi</option>
+              <option>Buffer Zone</option><option>Federal B Area</option><option>Liaquatabad</option>
+              <option>Nazimabad</option><option>Gulberg</option><option>Gulistan-e-Johar</option>
+              <option>Gulshan-e-Iqbal</option><option>Ancholi</option><option>Yasinabad</option>
+              <option>Karimabad</option><option>Azizabad</option><option>Shadman Town</option>
+              <option>North Karachi Sector 5</option><option>North Karachi Sector 11</option>
+              <option>North Karachi Sector 15-A</option><option>Gulshan-e-Shamim</option>
+            </optgroup>
+            <optgroup label="West Karachi">
+              <option>Orangi Town</option><option>Banaras</option><option>Mominabad</option>
+              <option>Qasba Colony</option><option>Metroville</option><option>Site Town</option>
+              <option>Site Industrial Area</option><option>Baldia Town</option><option>Ittehad Town</option>
+              <option>Surjani Town</option><option>Taiser Town</option><option>Shahrah-e-Noor Jahan</option>
+              <option>Orangi Town Sector 11</option><option>Orangi Town Sector 14</option>
+              <option>F.B. Area Industrial Area</option><option>Hawksbay</option><option>Mauripur</option>
+              <option>Machar Colony</option><option>Shershah</option><option>Gulshan-e-Ghazi</option>
+            </optgroup>
+            <optgroup label="South & Old Karachi">
+              <option>Saddar</option><option>Clifton</option><option>Defence (DHA)</option>
+              <option>Lyari</option><option>Kharadar</option><option>Meethadar</option><option>Garden</option>
+              <option>Aram Bagh</option><option>Burns Road</option><option>Mai Kolachi</option>
+              <option>Keamari</option><option>Manora</option><option>Shah Faisal Colony</option>
+              <option>I.I. Chundrigar Road</option><option>M.A. Jinnah Road</option><option>Jamshed Quarters</option>
+              <option>Soldier Bazaar</option><option>Pakistan Chowk</option><option>Napier</option>
+              <option>Lyari Expressway Area</option><option>Punjab Colony</option><option>Bath Island</option>
+              <option>Khadda Market</option><option>Sea View</option><option>Badar Commercial</option>
+              <option>Clifton Block 2</option><option>Clifton Block 5</option><option>DHA Phase 2</option>
+              <option>DHA Phase 5</option><option>DHA Phase 6</option><option>DHA Phase 8</option>
+            </optgroup>
+            <optgroup label="East Karachi">
+              <option>Malir</option><option>Malir Cantt</option><option>Shah Faisal Town</option>
+              <option>Model Colony</option><option>Jinnah Avenue</option><option>Korangi</option>
+              <option>Landhi</option><option>Quaidabad</option><option>Shah Latif Town</option>
+              <option>Airport</option><option>Safoora Goth</option><option>Scheme 33</option>
+              <option>Gulzar-e-Hijri</option><option>Johar Chowrangi</option><option>Pehlwan Goth</option>
+              <option>Korangi Industrial Area</option><option>Korangi Crossing</option>
+              <option>Landhi Industrial Area</option><option>Gulshan-e-Hadeed</option>
+              <option>Malir Halt</option><option>Jinnah International Airport</option>
+              <option>Bahadurabad</option><option>PECHS</option><option>Tariq Road</option>
+              <option>Shaheed-e-Millat Road</option><option>Karsaz</option><option>Azam Basti</option>
+            </optgroup>
+            <optgroup label="North-East Karachi">
+              <option>Gulshan-e-Maymar</option><option>Scheme 45</option><option>Gadap Town</option>
+              <option>Abul Hasan Isphahani Road</option><option>University Road</option>
+              <option>Karachi University</option><option>Super Highway</option>
+              <option>Bhains Colony</option><option>Jokhio Goth</option><option>Khuda Ki Basti</option>
+              <option>Saadi Town</option><option>Pakistan Muslim Town</option><option>Al-Azhar Garden</option>
+            </optgroup>
+            <optgroup label="Other Karachi Areas">
+              <option>Faisal Cantonment</option><option>Clifton Cantonment</option>
+              <option>Karachi Cantonment</option><option>Port Qasim</option><option>Other Karachi area</option>
+            </optgroup>
+          </select>
+          <input id="customCustomerArea" class="form-control custom-area-input" type="text"
+            placeholder="Type your Karachi area" maxlength="80" autocomplete="address-level2" hidden>
+        </div>
+
+        <fieldset class="order-type-fieldset">
+          <legend class="form-label">Select your order type</legend>
+          <div class="order-type-options">
+            <label class="order-type-option">
+              <input type="radio" name="orderType" value="delivery" required>
+              <span class="order-type-icon" aria-hidden="true">⌂</span>
+              <span><strong>Delivery</strong><small>Bring my order to me</small></span>
+            </label>
+            <label class="order-type-option">
+              <input type="radio" name="orderType" value="pickup" required>
+              <span class="order-type-icon" aria-hidden="true">↗</span>
+              <span><strong>Pickup</strong><small>I will collect my order</small></span>
+            </label>
+          </div>
+        </fieldset>
+        <p id="orderSetupMessage" class="order-setup-message" role="alert"></p>
+        <button class="btn-primary-gold order-setup-submit" type="submit">Continue to Restaurant</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       NAVIGATION HEADER (Glassmorphic)
+       ============================================================== -->
+  <header class="navbar">
+    <div class="nav-container">
+      <!-- Gohar Restaurant Brand Logo -->
+      <a href="#" class="brand-logo" aria-label="Gohar Restaurant Home">
+        <img class="brand-logo-img" src="logo.png" alt="Gohar Restaurant Logo">
+        <div class="brand-text">
+          <h1>Gohar <span class="gold-text">Restaurant</span></h1>
+          <span class="tagline">Est. 1993 • Orangi Town</span>
+        </div>
+      </a>
+
+      <!-- Public Nav Links (Admin is strictly hidden from public navbar) -->
+      <nav id="primary-navigation">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link{% if page == 'home' %} active{% endif %}"{% if page == 'home' %} aria-current="page"{% endif %}>Home</a></li>
+          <li><a href="/popular" class="nav-link{% if page == 'popular' %} active{% endif %}"{% if page == 'popular' %} aria-current="page"{% endif %}>19 Popular Items</a></li>
+          <li><a href="/menu" class="nav-link{% if page == 'menu' %} active{% endif %}"{% if page == 'menu' %} aria-current="page"{% endif %}>Categorized Menu</a></li>
+          <li><a href="/about" class="nav-link{% if page == 'about' %} active{% endif %}"{% if page == 'about' %} aria-current="page"{% endif %}>Location & Timings</a></li>
+          <li><a href="/reviews" class="nav-link{% if page == 'reviews' %} active{% endif %}"{% if page == 'reviews' %} aria-current="page"{% endif %}>Reviews</a></li>
+        </ul>
+      </nav>
+
+      <button class="mobile-nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="mobile-nav-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="mobile-nav-label">Menu</span>
+      </button>
+
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <button id="editOrderPreferences" class="order-preferences-button" type="button"
+          aria-label="Change area and order type" title="Change area and order type" hidden>
+          <svg class="ui-icon" aria-hidden="true"><use href="#icon-map"></use></svg>
+          <span id="orderPreferencesLabel" hidden>Set area</span>
+        </button>
+        <button id="customerAccountButton" class="customer-account-button" type="button" onclick="openCustomerAccount()">
+          Sign in
+        </button>
+        <button class="btn-book-nav" onclick="openModal('tableBookingModal')">
+          <svg class="ui-icon" aria-hidden="true"><use href="#icon-calendar"></use></svg> Book a Table
+        </button>
+
+        <button class="cart-toggle-btn" onclick="toggleCartDrawer(true)" aria-label="Open Shopping Cart">
+          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span class="cart-badge-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==============================================================
+       HERO BANNER SECTION
+       ============================================================== -->
+  <section id="hero" class="hero-section">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+      poster="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop"
+      aria-hidden="true" tabindex="-1">
+      <source src="video1.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <div class="hero-tag">
+        <svg class="ui-icon" aria-hidden="true"><use href="#icon-crown"></use></svg> گوھر ریسٹورینٹ • Authentic Karachi Heritage Since 1993
+      </div>
+
+      <h2 class="hero-title">
+        The Sizzle of Karachi BBQ, <br>
+        <span class="gold-text">Crispy Broast & Royal Flavors</span>
+      </h2>
+
+      <p class="hero-subtitle">
+        Craving charcoal-grilled Dhaga Kababs, spicy Masala Rice, Crispy Broast, or Falooda? Explore the menu and visit Gohar Restaurant in Orangi Town, Karachi, proudly serving guests since 1993.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#popular" class="btn-primary-gold">
+          <svg class="ui-icon" aria-hidden="true"><use href="#icon-fire"></use></svg> Explore 19 Popular Dishes
+        </a>
+        <button class="btn-secondary-dark" onclick="openModal('tableBookingModal')">
+          <svg class="ui-icon" aria-hidden="true"><use href="#icon-calendar"></use></svg> Reserve a Table
+        </button>
+      </div>
+
+      <!-- Quick Highlights Bar -->
+      <div class="hero-highlights">
+        <div class="highlight-item">
+          <svg class="highlight-icon ui-icon" aria-hidden="true"><use href="#icon-utensils"></use></svg>
+          <div>
+            <h4>100% Fresh & Halal</h4>
+            <p>Finest cuts & pure spices</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <svg class="highlight-icon ui-icon" aria-hidden="true"><use href="#icon-truck"></use></svg>
+          <div>
+            <h4>Fast Delivery</h4>
+            <p>Orangi Town & nearby sectors</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <svg class="highlight-icon ui-icon" aria-hidden="true"><use href="#icon-crown"></use></svg>
+          <div>
+            <h4>Est. 1993 Heritage</h4>
+            <p>Serving Karachi since 1993</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <svg class="highlight-icon ui-icon" aria-hidden="true"><use href="#icon-star"></use></svg>
+          <div>
+            <h4>Guest Reviews</h4>
+            <p>Read and share your experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="heroCarouselSection" class="hero-carousel-section" aria-label="Gohar Restaurant photo gallery">
+    <div id="heroCarousel" class="hero-carousel" role="region" aria-label="Gohar Restaurant image carousel" tabindex="0">
+      <img class="hero-carousel-slide is-active" src="image1.png" alt="" aria-hidden="true">
+      <img class="hero-carousel-slide" alt="" aria-hidden="true">
+    </div>
+    <button class="hero-carousel-arrow hero-carousel-prev" type="button" aria-label="Show previous image">
+      <span aria-hidden="true">&#10094;</span>
+    </button>
+    <button class="hero-carousel-arrow hero-carousel-next" type="button" aria-label="Show next image">
+      <span aria-hidden="true">&#10095;</span>
+    </button>
+    <div class="hero-carousel-dots" aria-label="Choose carousel image"></div>
+  </section>
+
+  <section id="pizzaScrollSection" class="pizza-scroll-section" aria-labelledby="pizzaScrollTitle">
+    <div class="container pizza-scroll-container">
+      <div class="pizza-scroll-copy">
+        <span class="section-badge">A Slice Above</span>
+        <h2 id="pizzaScrollTitle" class="section-title">Watch the <span class="gold-text">Flavor Rise</span></h2>
+        <p>Scroll to watch the pizza rise and turn.</p>
+      </div>
+      <div class="pizza-scroll-stage">
+        <div class="pizza-scroll-art">
+          <img class="pizza-scroll-image" src="image14.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       POPULAR ITEMS GRID (TOP 19 DISHES WITH 3D CARD FLIP)
+       ============================================================== -->
+  <section id="popular" class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Chef's Hall of Fame</span>
+        <h2 class="section-title">Our <span class="gold-text">19 Popular Items</span></h2>
+        <p class="section-desc">
+          Hover over any dish to flip the card and reveal appetizing culinary details, prices, and instant Add to Cart!
+        </p>
+      </div>
+
+      <!-- 19 Popular Items Rendered with 3D Flip via JavaScript -->
+      <div id="popularGrid" class="popular-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       COMPLETE CATEGORIZED MENU SECTION
+       ============================================================== -->
+  <section id="menu" class="section-padding" style="background: rgba(22, 22, 26, 0.7); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Explore Everything</span>
+        <h2 class="section-title">Full <span class="gold-text">Categorized Menu</span></h2>
+        <p class="section-desc">From live charcoal BBQ and simmering Handis to Chinese rice, crispy broast buckets, and royal desserts.</p>
+      </div>
+
+      <div class="menu-feature-banner">
+        <div class="menu-feature-copy">
+          <img src="logo.png" alt="Gohar Restaurant logo" class="menu-feature-logo">
+          <div>
+            <span class="menu-feature-kicker">Gohar Restaurant • Est. 1993</span>
+            <h3>Good food brings people together</h3>
+            <p>Explore our kitchen favorites, made fresh and served with Karachi hospitality.</p>
+          </div>
+        </div>
+        <img
+          class="menu-feature-image"
+          src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=90"
+          alt="Freshly grilled barbecue served with herbs"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="menu-controls">
+        <div class="search-box-wrap">
+          <svg class="search-icon ui-icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+          <input type="search" id="menuSearchInput" class="search-input" placeholder="Search dishes or ingredients..." aria-label="Search menu dishes or ingredients">
+        </div>
+
+        <div class="category-tabs">
+          <button class="cat-tab-btn active" data-category="ALL">All Items</button>
+          <button class="cat-tab-btn" data-category="STARTER">Starter</button>
+          <button class="cat-tab-btn" data-category="KARAHI">Karahi</button>
+          <button class="cat-tab-btn" data-category="HANDI">Handi</button>
+          <button class="cat-tab-btn" data-category="PAKISTANI CURRY">Pakistani Curry</button>
+          <button class="cat-tab-btn" data-category="BAR B Q">Bar B Q</button>
+          <button class="cat-tab-btn" data-category="BURGER">Burger</button>
+          <button class="cat-tab-btn" data-category="BROAST">Broast</button>
+          <button class="cat-tab-btn" data-category="CHINESE CUISINE">Chinese Cuisine</button>
+          <button class="cat-tab-btn" data-category="RICE">Rice</button>
+          <button class="cat-tab-btn" data-category="SANDWICH">Sandwich</button>
+          <button class="cat-tab-btn" data-category="CHICKEN & BEEF ROLLS">Chicken & Beef Rolls</button>
+          <button class="cat-tab-btn" data-category="NOODLES & PASTA">Noodles & Pasta</button>
+          <button class="cat-tab-btn" data-category="FRIES">Fries</button>
+          <button class="cat-tab-btn" data-category="HOT TANDOOR">Hot Tandoor</button>
+          <button class="cat-tab-btn" data-category="PLATTERS">Platters</button>
+          <button class="cat-tab-btn" data-category="DESSERTS, SHAKES & MOCKTAILS">Desserts, Shakes & Mocktails</button>
+        </div>
+      </div>
+
+      <div id="categoryGrid" class="category-items-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       ABOUT US & LOCATION BANNER
+       ============================================================== -->
+  <section id="about" class="section-padding" style="background: #111114;">
+    <div class="container">
+      <article id="ourStory" class="our-story-card">
+        <div class="our-story-emblem">
+          <img src="logo.png" alt="Gohar Restaurant logo" loading="lazy">
+          <span>EST. 1993</span>
+        </div>
+        <div class="our-story-copy">
+          <span class="section-badge">Our Story</span>
+          <h2 class="section-title">A Karachi Table, <span class="gold-text">Made for Sharing</span></h2>
+          <p>
+            Since 1993, Gohar Restaurant has welcomed guests in Orangi Town with the flavors Karachi loves.
+            What began as a neighborhood place to gather has grown into a restaurant for families and friends
+            looking to share a generous meal and warm hospitality.
+          </p>
+          <p>
+            Our menu brings together the character of Pakistani cooking: sizzling BBQ, hearty karahi and handi,
+            comforting curries, Chinese favorites, and something sweet or chilled to finish. Whether you visit
+            for a quick bite or settle in around a platter, we want every meal to feel familiar, satisfying,
+            and worth sharing.
+          </p>
+          <p class="our-story-signoff">Gohar Restaurant · Proudly serving Karachi since 1993</p>
+        </div>
+      </article>
+
+      <div class="section-header">
+        <span class="section-badge">Visit Gohar Restaurant</span>
+        <h2 class="section-title">Location, <span class="gold-text">Hours & Delivery</span></h2>
+        <p class="section-desc">Find us in Orangi Town, Karachi, or contact our team for orders and reservations.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon" aria-hidden="true"><use href="#icon-map"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Prime Location</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Iqbal Market Road, Sector #11, Near Khuda Buksh Bakers, Orangi Town, Karachi, Pakistan.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon" aria-hidden="true"><use href="#icon-clock"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Opening Hours</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;"><strong>Sat – Thu:</strong> 1:00 PM – 1:00 AM<br><strong>Friday:</strong> 2:00 PM – 1:00 AM (After Jummah)</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Order & Helpline</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Direct WhatsApp / Call:<br><strong style="color: var(--gold-primary); font-size: 1.1rem;">03339229300</strong></p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon delivery-icon" aria-hidden="true"><use href="#icon-truck"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Delivery Guarantee</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Flat PKR 100 delivery across Orangi Town.<br><strong style="color: #10B981;">FREE Delivery on orders over PKR 1,500!</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-map-card">
+        <div class="restaurant-map-heading">
+          <div>
+            <h3>Find Us on Google Maps</h3>
+            <p>Iqbal Market Road, Sector #11, near Khuda Buksh Bakers, Orangi Town, Karachi</p>
+          </div>
+          <a
+            class="btn-primary-gold map-directions-link"
+            href="https://www.google.com/maps/search/?api=1&amp;query=Gohar+Restaurant%2C+Iqbal+Market+Road%2C+Sector+11%2C+near+Khuda+Buksh+Bakers%2C+Orangi+Town%2C+Karachi"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Get Directions</a>
+        </div>
+        <iframe
+          class="restaurant-map"
+          src="https://maps.google.com/maps?q=Gohar%20Restaurant%2C%20Iqbal%20Market%20Road%2C%20Sector%2011%2C%20near%20Khuda%20Buksh%20Bakers%2C%20Orangi%20Town%2C%20Karachi&amp;output=embed"
+          title="Google Maps location for Gohar Restaurant in Orangi Town, Karachi"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="section-padding review-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Guest Feedback</span>
+        <h2 class="section-title">Customer <span class="gold-text">Reviews</span></h2>
+        <p class="section-desc">Share your experience with Gohar Restaurant. Your rating and comment help us serve you better.</p>
+      </div>
+
+      <p id="postActionReviewPrompt" class="post-action-review-prompt" role="status" hidden></p>
+      <div class="reviews-summary" aria-live="polite">
+        <span class="reviews-summary-stars" id="reviewsAverageStars" aria-label="{{ average_rating|default(0) }} out of 5 stars">{% for star in range(1, 6) %}{{ '★' if average_rating|default(0) >= star else '☆' }}{% endfor %}</span>
+        <strong id="reviewsAverage">{{ average_rating|default(0) }}</strong>
+        <span id="reviewsCount">({{ review_count|default(0) }} reviews)</span>
+      </div>
+
+      <div class="reviews-layout">
+        <form id="customerReviewForm" class="review-form">
+          <h3>Write a review</h3>
+          <div class="form-group">
+            <label class="form-label" for="reviewCustomerName">Your name *</label>
+            <input class="form-control" type="text" id="reviewCustomerName" name="customer_name" maxlength="50" autocomplete="name" required>
+          </div>
+          <fieldset class="form-group review-rating-field">
+            <legend class="form-label">Your rating *</legend>
+            <div class="review-rating-options" role="radiogroup" aria-label="Choose a rating from 1 to 5 stars">
+              {% for star in range(5, 0, -1) %}
+              <input type="radio" id="reviewRating{{ star }}" name="rating" value="{{ star }}" required>
+              <label for="reviewRating{{ star }}" aria-label="{{ star }} star{{ 's' if star != 1 else '' }}">★</label>
+              {% endfor %}
+            </div>
+          </fieldset>
+          <div class="form-group">
+            <label class="form-label" for="reviewComment">Short comment *</label>
+            <textarea class="form-control" id="reviewComment" name="comment" rows="4" maxlength="300" placeholder="Tell us what you enjoyed (up to 300 characters)" required></textarea>
+          </div>
+          <p id="reviewFormMessage" class="review-form-message" role="status" aria-live="polite"></p>
+          <button class="btn-primary-gold review-submit-btn" type="submit">Submit review</button>
+        </form>
+
+        <div id="customerReviewsList" class="customer-reviews-list" aria-live="polite">
+          {% for review in reviews|default([]) %}
+          <article class="customer-review-card">
+            <div class="customer-review-card-heading">
+              <strong>{{ review.customer_name }}</strong>
+              <span class="customer-review-stars" aria-label="{{ review.rating }} out of 5 stars">{{ '★' * review.rating }}{{ '☆' * (5 - review.rating) }}</span>
+            </div>
+            <p>{{ review.comment }}</p>
+            <time>{{ review.created_at }}</time>
+          </article>
+          {% else %}
+          <p class="reviews-empty-state">No reviews yet. Be the first to share your experience!</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       INITIAL TABLE BOOKING MODAL (Auto Popups with Skip Option)
+       ============================================================== -->
+  <div id="tableBookingModal" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close-icon" onclick="closeModal('tableBookingModal')" aria-label="Close Modal">&times;</button>
+      
+      <div class="modal-header">
+        <img src="logo.png" style="width: 60px; height: 60px; margin: 0 auto 10px; display: block;" alt="Gohar Logo">
+        <h3 style="font-size: 1.5rem; margin-bottom: 4px;">Book a Family Table</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Reserve your table at Gohar Restaurant, Orangi Town for guaranteed seating and priority hospitality.
+        </p>
+      </div>
+
+      <form id="tableBookingForm">
+        <div class="form-group">
+          <label class="form-label" for="bookName">Customer Full Name *</label>
+          <input type="text" id="bookName" class="form-control" placeholder="Enter your full name" autocomplete="name" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bookPhone">Contact Phone / WhatsApp *</label>
+          <input type="tel" id="bookPhone" class="form-control" placeholder="Enter your phone number" autocomplete="tel" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="bookDate">Reservation Date *</label>
+            <input type="date" id="bookDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookTime">Preferred Time *</label>
+            <input type="time" id="bookTime" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bookGuests">Number of Guests</label>
+          <select id="bookGuests" class="form-control">
+            <option value="2">2 Guests (Couple / Pair)</option>
+            <option value="4" selected>4 Guests (Family Table)</option>
+            <option value="6">6 Guests (Medium Party)</option>
+            <option value="8">8 Guests (Large Family)</option>
+            <option value="12">12+ Guests (Party / Event)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bookNotes">Special Requests (Optional)</label>
+          <input type="text" id="bookNotes" class="form-control" placeholder="Add any seating or celebration requests">
+        </div>
+
+        <!-- Clear Skip / Explore Menu Button -->
+        <div class="modal-btn-row">
+          <button type="button" class="btn-skip" onclick="closeModal('tableBookingModal')">
+            Skip / Explore Menu
+          </button>
+          <button type="submit" class="btn-submit-gold">
+            Confirm Reservation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="customerAccountModal" class="modal-overlay">
+    <section class="modal-box customer-account-modal" role="dialog" aria-modal="true" aria-labelledby="customerAccountTitle">
+      <button class="modal-close-icon" type="button" onclick="closeModal('customerAccountModal')" aria-label="Close sign-in dialog">&times;</button>
+      <div class="modal-header">
+        <img src="logo.png" class="customer-account-logo" alt="">
+        <h2 id="customerAccountTitle">Your Gohar Account</h2>
+        <p>Sign in if you like. An account is optional—browse and order without one.</p>
+      </div>
+
+      <div id="customerAccountSignedIn" class="customer-account-signed-in" hidden>
+        <p>Signed in as <strong id="customerAccountName"></strong></p>
+        <p id="customerAccountEmail" class="customer-account-email"></p>
+        <button id="customerAccountLogout" class="btn-skip customer-account-logout" type="button">Sign out</button>
+      </div>
+
+      <div id="customerAccountForms">
+        <div class="customer-auth-tabs" role="tablist" aria-label="Account options">
+          <button class="customer-auth-tab is-active" type="button" role="tab" aria-selected="true" data-auth-mode="login">Sign in</button>
+          <button class="customer-auth-tab" type="button" role="tab" aria-selected="false" data-auth-mode="register">Create account</button>
+        </div>
+        <form id="customerAccountForm">
+          <div class="form-group" id="customerAccountNameGroup" hidden>
+            <label class="form-label" for="customerAccountNameInput">Your name</label>
+            <input class="form-control" id="customerAccountNameInput" name="name" autocomplete="name" maxlength="100">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="customerAccountEmailInput">Email address</label>
+            <input class="form-control" id="customerAccountEmailInput" name="email" type="email" autocomplete="email" maxlength="254" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="customerAccountPasswordInput">Password</label>
+            <input class="form-control" id="customerAccountPasswordInput" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required>
+            <small id="customerAccountPasswordHint" class="customer-account-hint" hidden>Use at least 8 characters.</small>
+          </div>
+          <p id="customerAccountMessage" class="customer-account-message" role="alert" aria-live="polite"></p>
+          <button id="customerAccountSubmit" class="btn-primary-gold customer-account-submit" type="submit">Sign in</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==============================================================
+       CART DRAWER & OVERLAY
+       ============================================================== -->
+  <div id="cartOverlay" class="modal-overlay" onclick="toggleCartDrawer(false)" style="background: rgba(0,0,0,0.6); z-index: 1000;"></div>
+  
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg class="ui-icon" aria-hidden="true"><use href="#icon-cart"></use></svg>
+        <h3 style="font-size: 1.2rem;">Your Food Cart</h3>
+      </div>
+      <button class="chat-close-btn" onclick="toggleCartDrawer(false)">&times;</button>
+    </div>
+
+    <div id="cartItemsList" class="cart-items-list"></div>
+
+    <div class="cart-footer">
+      <div id="freeDeliveryNotice" class="free-delivery-badge" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34D399; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; text-align: center; margin-bottom: 12px;"></div>
+      <div class="cart-summary-line">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">PKR 0</span>
+      </div>
+      <div class="cart-summary-line">
+        <span id="cartDeliveryLabel">Delivery Fee</span>
+        <span id="cartDelivery">PKR 100</span>
+      </div>
+      <div class="cart-total-line">
+        <span>Grand Total</span>
+        <span id="cartTotal">PKR 0</span>
+      </div>
+      <button class="btn-primary-gold" style="width: 100%; justify-content: center;" onclick="openCheckoutModal()">
+        Proceed to Checkout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==============================================================
+       CHECKOUT MODAL
+       ============================================================== -->
+  <div id="checkoutModal" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close-icon" onclick="closeModal('checkoutModal')">&times;</button>
+      
+      <div class="modal-header">
+        <svg class="ui-icon modal-feature-icon" aria-hidden="true"><use href="#icon-truck"></use></svg>
+        <h3 id="checkoutTitle" style="font-size: 1.5rem;">Fast Home Delivery</h3>
+        <p id="checkoutDescription" style="font-size: 0.88rem; color: var(--text-muted);">Enter your delivery address.</p>
+      </div>
+
+      <div id="checkoutOrderSummary"></div>
+
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label class="form-label" for="custName">Customer Full Name *</label>
+          <input type="text" id="custName" class="form-control" placeholder="Enter your full name" autocomplete="name" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custPhone">Phone / Mobile Number *</label>
+          <input type="tel" id="custPhone" class="form-control" placeholder="Enter your phone number" autocomplete="tel" required>
+        </div>
+
+        <div class="form-group">
+          <label id="custAddressLabel" class="form-label" for="custAddress">Full Street & Area Address *</label>
+          <textarea id="custAddress" class="form-control" rows="2" placeholder="Enter your house, street and area" autocomplete="street-address" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="custNotes">Special Food Instructions</label>
+          <input type="text" id="custNotes" class="form-control" placeholder="Add any food instructions (optional)">
+        </div>
+
+        <div style="background: #25252a; padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 0.88rem;">
+          <svg class="ui-icon payment-icon" aria-hidden="true"><use href="#icon-cash"></use></svg>
+          <span>Payment: <strong id="checkoutPaymentDescription">Cash on Delivery (COD)</strong> upon food arrival.</span>
+        </div>
+
+        <div class="modal-btn-row">
+          <button type="button" class="btn-skip" onclick="closeModal('checkoutModal')">Cancel</button>
+          <button type="submit" class="btn-submit-gold">Place Order Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       ORDER SUCCESS MODAL
+       ============================================================== -->
+  <div id="orderSuccessModal" class="modal-overlay">
+    <div class="modal-box" style="text-align: center;">
+      <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: rgba(16, 185, 129, 0.2); border: 2px solid #10B981; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #10B981;">
+        ✓
+      </div>
+      <h3 style="font-size: 1.6rem; margin-bottom: 6px;">Order Placed Successfully!</h3>
+      <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+        Thank you, <strong id="successCustName" style="color: white;">Customer</strong>! Your order is being freshly prepared in the Gohar kitchen.
+      </p>
+
+      <div style="background: #232328; border: 1px dashed var(--border-gold); padding: 14px; border-radius: 12px; margin-bottom: 24px;">
+        <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Unique Order Number</div>
+        <div id="successOrderNum" style="font-size: 1.5rem; font-weight: 900; color: var(--gold-primary); letter-spacing: 1px;">GOHAR-XXXX</div>
+        <div style="font-size: 0.9rem; color: #D1D1D6; margin-top: 4px;">Grand Total: <span id="successTotal" style="font-weight: bold; color: white;">PKR 0</span></div>
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button class="btn-primary-gold" onclick="viewOrderInvoice()">
+          <svg class="ui-icon" aria-hidden="true"><use href="#icon-receipt"></use></svg> View & Print Invoice
+        </button>
+        <button class="btn-secondary-dark" onclick="closeModal('orderSuccessModal')">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       PRINTABLE INVOICE MODAL (FOR ORDERS & TABLE RESERVATIONS)
+       ============================================================== -->
+  <div id="invoiceModal" class="modal-overlay">
+    <div class="modal-box invoice-modal-box">
+      <button class="modal-close-icon" onclick="closeModal('invoiceModal')">&times;</button>
+      
+      <div id="invoiceContent" class="invoice-preview-container"></div>
+
+      <div class="invoice-action-bar">
+        <button class="btn-skip" onclick="closeModal('invoiceModal')">Close</button>
+        <button class="btn-primary-gold" style="padding: 10px 24px;" onclick="printCurrentInvoice()">
+          <svg class="ui-icon" aria-hidden="true"><use href="#icon-printer"></use></svg> Print Invoice / PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       FLOATING ACTIONS:
+       1. Bouncing WhatsApp Button (Bottom-Left) - ICON ONLY!
+       2. Gohar AI Assistant (Bottom-Right) - GEMINI STYLE JUMPING!
+       ============================================================== -->
+
+  <!-- 1. Bouncing WhatsApp Floating Button (Bottom-Left) - ICON ONLY -->
+  <a href="https://wa.me/923339229300" target="_blank" class="floating-whatsapp" aria-label="Chat with Gohar Restaurant on WhatsApp">
+    <svg class="whatsapp-icon-svg" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <path d="M32 7C18.2 7 7 17.9 7 31.4c0 4.9 1.5 9.4 4.1 13.2L8 57l13-3.3c3.4 1.8 7.1 2.7 11 2.7 13.8 0 25-10.9 25-24.3S45.8 7 32 7Z"/>
+      <path d="M23.4 19.8c-1.3-1-2.8-.5-3.6.8-1 1.6-1.8 3.5-1.3 6.2 1 5.2 5.8 10.9 10.9 14 4.4 2.7 9.7 4.1 12.4 2.2 1.5-1.1 2.2-2.8 1.6-3.7-.5-.8-4.4-2.8-5.4-3.1-1-.3-1.5.5-2.1 1.3-.5.8-1 1.2-1.8 1-1.8-.5-6.6-3.8-7.8-6-.4-.7.1-1.3.7-1.9.5-.6 1.1-1.2 1-2-.1-.8-2.8-6.2-3.8-7.1-.3-.3-.6-.5-.8-.6Z"/>
+    </svg>
+  </a>
+
+  <!-- 2. Gohar Live Support Trigger (Bottom-Right) - Real Brand Concierge -->
+  <button class="floating-assistant-btn" onclick="toggleAssistantChat()" aria-label="Live Support Gohar Restaurant">
+    <img class="support-btn-img" src="logo.png" alt="Gohar Support">
+    <span class="support-online-badge">ONLINE</span>
+  </button>
+
+  <!-- Gohar Support Chat Window -->
+  <div id="assistantChatWidget" class="chat-widget-window">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="assistant-avatar">
+          <img src="logo.png" alt="Gohar Logo">
+        </div>
+        <div>
+          <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Gohar Customer Support</h4>
+          <span style="font-size: 0.72rem; color: #10B981;">● Online Concierge • Est. 1993</span>
+        </div>
+      </div>
+      <button class="chat-close-btn" onclick="toggleAssistantChat()">&times;</button>
+    </div>
+
+    <div id="assistantChatMessages" class="chat-messages">
+      <div class="chat-bubble bot">
+        Assalamu Alaikum! Welcome to <strong>Gohar Restaurant</strong> (Est. 1993), Orangi Town, Karachi!
+        <br><br>
+        How can we serve you today? Feel free to ask about our 19 popular dishes, charcoal BBQ, live Karahi, home delivery, or reserving a table!
+      </div>
+    </div>
+
+    <div class="quick-chips-wrap">
+      <button class="quick-chip" onclick="sendAssistantMessage('What are your 19 popular dishes?')"><svg class="ui-icon" aria-hidden="true"><use href="#icon-fire"></use></svg> Popular Items</button>
+      <button class="quick-chip" onclick="sendAssistantMessage('What are your opening hours & timings?')"><svg class="ui-icon" aria-hidden="true"><use href="#icon-clock"></use></svg> Timings</button>
+      <button class="quick-chip" onclick="sendAssistantMessage('Where are you located in Orangi Town?')"><svg class="ui-icon" aria-hidden="true"><use href="#icon-map"></use></svg> Location</button>
+      <button class="quick-chip" onclick="sendAssistantMessage('Do you offer free delivery?')"><svg class="ui-icon" aria-hidden="true"><use href="#icon-truck"></use></svg> Delivery Info</button>
+    </div>
+
+    <div class="chat-input-bar">
+      <input type="text" id="assistantChatInput" class="chat-input" placeholder="Ask us about the menu or reservations..." aria-label="Message Gohar customer support">
+      <button class="chat-send-btn" onclick="sendAssistantMessage()" aria-label="Send Message">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       FOOTER (Public - NO ADMIN LINK)
+       ============================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: 14px;">
+            <img class="brand-logo-img" src="logo.png" alt="Gohar Restaurant Logo" style="width: 48px; height: 48px;">
+            <div class="brand-text">
+              <h3 style="font-size: 1.3rem;">Gohar Restaurant</h3>
+              <span class="tagline">Est. 1993 • گوھر ریسٹورینٹ</span>
+            </div>
+          </div>
+          <p>
+            Karachi's cherished culinary landmark for authentic Bar B Q, Crispy Broast, Handi, Biryani & Traditional Desserts. Proudly serving families in Orangi Town for over 34 years.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/popular">19 Popular Items</a></li>
+            <li><a href="/menu">Categorized Menu</a></li>
+            <li><a href="/reviews">Customer Reviews</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('tableBookingModal')">Table Reservation</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Menu Categories</h4>
+          <ul class="footer-links">
+            <li><a href="/menu">Charcoal Bar B Q</a></li>
+            <li><a href="/menu">Broast & Fried Chicken</a></li>
+            <li><a href="/menu">Karahi & Desi Handi</a></li>
+            <li><a href="/menu">Burgers & Sandwiches</a></li>
+            <li><a href="/menu">Shakes & Falooda</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact & Location</h4>
+          <p><strong>Address:</strong> Iqbal Market Road, Sector #11, Near Khuda Buksh Bakers, Orangi Town, Karachi, Pakistan.</p>
+          <p><strong>Phone / WhatsApp:</strong> 03339229300</p>
+          <p><strong>Sat-Thu:</strong> 1:00 PM – 1:00 AM<br><strong>Friday:</strong> 2:00 PM – 1:00 AM</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 1993–2026 Gohar Restaurant (گوھر ریسٹورینٹ). All rights reserved. Crafted with culinary excellence for Karachi foodies.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js?v=29"></script>
+</body>
+</html>
