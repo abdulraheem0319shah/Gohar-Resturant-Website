@@ -1129,7 +1129,7 @@ h1, h2, h3, h4, h5, h6 {
 .pizza-scroll-section {
   position: relative;
   z-index: 1;
-  min-height: 220vh;
+  min-height: 155vh;
   background:
     radial-gradient(ellipse at 50% 72%, rgba(255, 143, 0, 0.12), transparent 54%),
     linear-gradient(180deg, #121212, #17120b 52%, #121212);
@@ -1137,7 +1137,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .pizza-scroll-container {
   position: relative;
-  min-height: 220vh;
+  min-height: 155vh;
 }
 
 .pizza-scroll-copy {
@@ -1175,7 +1175,7 @@ h1, h2, h3, h4, h5, h6 {
 .pizza-scroll-art {
   position: relative;
   z-index: 1;
-  width: min(100%, 900px);
+  width: min(100%, 740px);
   aspect-ratio: 3 / 2;
   transform-style: preserve-3d;
   opacity: var(--pizza-opacity, 0.65);

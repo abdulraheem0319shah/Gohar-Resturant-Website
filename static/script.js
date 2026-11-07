@@ -706,9 +706,9 @@ function setupPizzaSliceScroll() {
     };
     const fadeIn = 0.65 + 0.35 * smoothStep(0, 0.1, progress);
     const fadeOut = 1 - smoothStep(0.76, 1, progress);
-    const scale = 0.38 + (1.4 - 0.38) * progress;
-    const verticalTravel = window.innerHeight * -0.8 * progress;
-    const rotation = -12 + 360 * progress;
+    const scale = 0.45 + (1.05 - 0.45) * progress;
+    const verticalTravel = window.innerHeight * -0.55 * progress;
+    const rotation = -10 + 360 * progress;
 
     artwork.style.setProperty('--pizza-opacity', String(fadeIn * fadeOut));
     artwork.style.setProperty('--pizza-y', `${verticalTravel}px`);

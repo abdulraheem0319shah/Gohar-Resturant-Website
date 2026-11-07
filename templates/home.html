@@ -26,7 +26,7 @@
       </p>
 
       <div class="hero-actions">
-        <a href="#popular" class="btn-primary-gold">
+        <a href="#menu" class="btn-primary-gold">
           <svg class="ui-icon" aria-hidden="true"><use href="#icon-fire"></use></svg> Explore Full Menu
         </a>
         <button class="btn-secondary-dark" onclick="openModal('tableBookingModal')">
@@ -82,6 +82,21 @@
     <div class="hero-carousel-dots" aria-label="Choose carousel image"></div>
   </section>
 
+  <section id="pizzaScrollSection" class="pizza-scroll-section" aria-labelledby="pizzaScrollTitle">
+    <div class="container pizza-scroll-container">
+      <div class="pizza-scroll-copy">
+        <span class="section-badge">A Slice Above</span>
+        <h2 id="pizzaScrollTitle" class="section-title">Watch the <span class="gold-text">Flavor Rise</span></h2>
+        <p>Scroll to watch the pizza rise and turn.</p>
+      </div>
+      <div class="pizza-scroll-stage">
+        <div class="pizza-scroll-art">
+          <img class="pizza-scroll-image" src="{{ url_for('static', filename='image14.png') }}" alt="A freshly baked pizza with a lifted slice" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="menu" class="section-padding home-menu-section">
     <div class="container">
       <div class="section-header">
@@ -118,21 +133,6 @@
       </div>
 
       <div id="categoryGrid" class="category-items-grid"></div>
-    </div>
-  </section>
-
-  <section id="pizzaScrollSection" class="pizza-scroll-section" aria-labelledby="pizzaScrollTitle">
-    <div class="container pizza-scroll-container">
-      <div class="pizza-scroll-copy">
-        <span class="section-badge">A Slice Above</span>
-        <h2 id="pizzaScrollTitle" class="section-title">Watch the <span class="gold-text">Flavor Rise</span></h2>
-        <p>Scroll to watch the pizza rise and turn.</p>
-      </div>
-      <div class="pizza-scroll-stage">
-        <div class="pizza-scroll-art">
-          <img class="pizza-scroll-image" src="{{ url_for('static', filename='image14.png') }}" alt="" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
-        </div>
-      </div>
     </div>
   </section>
 
