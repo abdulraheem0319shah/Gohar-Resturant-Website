@@ -1246,9 +1246,14 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-md);
 }
 
-.card-flip-container:hover:not(.like-interaction) .card-flip-inner,
 .card-flip-container.flipped .card-flip-inner {
   transform: rotateY(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-flip-container:hover:not(.like-interaction) .card-flip-inner {
+    transform: rotateY(180deg);
+  }
 }
 
 /* Both Front & Back Face */
@@ -1273,8 +1278,10 @@ h1, h2, h3, h4, h5, h6 {
   transition: border-color 0.3s;
 }
 
-.card-flip-container:hover .card-front {
-  border-color: var(--border-gold);
+@media (hover: hover) and (pointer: fine) {
+  .card-flip-container:hover .card-front {
+    border-color: var(--border-gold);
+  }
 }
 
 .card-img-wrap {
@@ -1292,8 +1299,10 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform 0.5s ease;
 }
 
-.card-flip-container:hover .card-img {
-  transform: scale(1.08);
+@media (hover: hover) and (pointer: fine) {
+  .card-flip-container:hover .card-img {
+    transform: scale(1.08);
+  }
 }
 
 .dish-badge {
@@ -1484,15 +1493,6 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.flip-hint {
-  font-size: 0.75rem;
-  color: var(--gold-light);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  opacity: 0.9;
 }
 
 /* BACK FACE */
@@ -3540,9 +3540,6 @@ body:not([data-page="reviews"]) #reviews {
     line-height: 1.2;
   }
   .category-items-grid .card-front-body > p {
-    display: none;
-  }
-  .flip-hint {
     display: none;
   }
   .menu-feature-copy {

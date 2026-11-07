@@ -1020,7 +1020,6 @@ function renderPopularItems() {
             </div>
             <div class="card-front-footer">
               <span style="font-size: 1.25rem; font-weight: 800; color: var(--gold-primary);">PKR ${item.price}</span>
-              <span class="flip-hint">Hover to Flip ↻</span>
             </div>
           </div>
         </div>
@@ -1095,7 +1094,6 @@ function renderCategoryMenu() {
             <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">${item.desc}</p>
             <div class="card-front-footer">
               <span style="font-size: 1.05rem; font-weight: 800; color: var(--gold-primary);">${item.priceLabel}</span>
-              <span class="flip-hint">Hover to Flip ↻</span>
             </div>
           </div>
         </div>
