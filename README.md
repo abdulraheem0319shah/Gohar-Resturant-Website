@@ -42,3 +42,7 @@ Set `ADMIN_PASSWORD`, `SECRET_KEY`, and `GROQ_API_KEY` through environment varia
 ## Project structure
 
 Flask HTML templates are in `templates/`. Stylesheets, JavaScript, images, logos, and videos are in `static/` and are served from `/static/`.
+
+## Deployment
+
+Install dependencies with `pip install -r requirements.txt`. On a Linux hosting provider, start the app with `gunicorn app:app`.
