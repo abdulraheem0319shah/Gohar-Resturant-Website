@@ -1050,6 +1050,16 @@ function renderPopularItems() {
 let activeCategory = 'ALL';
 let searchQuery = '';
 
+function updateMenuOptionPrice(itemId) {
+  const item = FULL_CATEGORIZED_MENU.find(candidate => candidate.id === itemId);
+  const optionSelect = document.getElementById(`menu-option-${itemId}`);
+  const priceElement = document.getElementById(`menu-price-${itemId}`);
+  const selectedOption = item?.options?.[Number(optionSelect?.value)];
+  if (priceElement && selectedOption) {
+    priceElement.textContent = `PKR ${selectedOption.price.toLocaleString()}`;
+  }
+}
+
 function renderCategoryMenu() {
   const container = document.getElementById('categoryGrid');
   if (!container) return;
@@ -1080,7 +1090,7 @@ function renderCategoryMenu() {
   }
 
   container.innerHTML = filtered.map(item => `
-    <div class="card-flip-container" onclick="this.classList.toggle('flipped')">
+    <div class="card-flip-container${item.options ? ' has-options' : ''}" onclick="this.classList.toggle('flipped')">
       <div class="card-flip-inner">
         <!-- FRONT FACE -->
         <div class="card-front">
@@ -1093,7 +1103,7 @@ function renderCategoryMenu() {
             <h3 class="card-title">${item.name}</h3>
             <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px;">${item.desc}</p>
             <div class="card-front-footer">
-              <span style="font-size: 1.05rem; font-weight: 800; color: var(--gold-primary);">${item.priceLabel}</span>
+              <span style="font-size: 1.05rem; font-weight: 800; color: var(--gold-primary);">${item.options ? `From PKR ${Math.min(...item.options.map(option => option.price)).toLocaleString()}` : item.priceLabel}</span>
             </div>
           </div>
         </div>
@@ -1108,13 +1118,13 @@ function renderCategoryMenu() {
             "${item.praise}"
           </div>
           <div class="card-back-meta">
-            <div class="card-back-price">${item.priceLabel}</div>
+            <div class="card-back-price"${item.options ? ` id="menu-price-${item.id}"` : ''}>${item.options ? `PKR ${item.options[0].price.toLocaleString()}` : item.priceLabel}</div>
             ${item.flavors ? `<label class="menu-option-label" for="menu-flavor-${item.id}">Choose flavor</label>
               <select id="menu-flavor-${item.id}" class="menu-option-select" onclick="event.stopPropagation()">
                 ${item.flavors.map((flavor, index) => `<option value="${index}">${flavor}</option>`).join("")}
               </select>` : ""}
             ${item.options ? `<label class="menu-option-label" for="menu-option-${item.id}">Choose size</label>
-              <select id="menu-option-${item.id}" class="menu-option-select" onclick="event.stopPropagation()">
+              <select id="menu-option-${item.id}" class="menu-option-select" onclick="event.stopPropagation()" onchange="updateMenuOptionPrice(${item.id})">
                 ${item.options.map((option, index) => `<option value="${index}">${option.label} — Rs. ${option.price}</option>`).join("")}
               </select>` : ""}
             ${item.price !== null || item.options

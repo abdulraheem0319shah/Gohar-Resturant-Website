@@ -3524,6 +3524,9 @@ body:not([data-page="reviews"]) #reviews {
   .card-flip-container {
     height: 292px;
   }
+  .category-items-grid .card-flip-container.has-options {
+    height: 330px;
+  }
   .card-img-wrap {
     height: 104px;
     flex: 0 0 104px;
