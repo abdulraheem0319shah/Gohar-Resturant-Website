@@ -404,6 +404,7 @@ const FULL_CATEGORIZED_MENU = MENU_CATEGORIES.flatMap(({ name: category, descrip
 );
 
 const ALL_MENU_ITEMS = [...POPULAR_ITEMS, ...FULL_CATEGORIZED_MENU];
+window.GOHAR_MENU_ITEMS = FULL_CATEGORIZED_MENU;
 
 // ==============================================================
 // 2. STATE & CART MANAGEMENT
@@ -504,7 +505,7 @@ function startWelcomeFlow() {
   loader.hidden = false;
   window.requestAnimationFrame(() => loader.classList.add('is-visible'));
   const video = loader.querySelector('video');
-  if (video) {
+  if (video && !window.matchMedia('(max-width: 768px)').matches) {
     video.play().catch((error) => {
       console.warn('Welcome background video could not autoplay:', error);
     });
@@ -1587,7 +1588,7 @@ async function sendAssistantMessage(customText) {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, history: chatHistory })
+      body: JSON.stringify({ message: text, history: chatHistory.slice(0, -1) })
     });
     const data = await res.json();
 
@@ -1751,12 +1752,20 @@ function setupHeroCarousel() {
   const nextButton = section?.querySelector('.hero-carousel-next');
   if (slides.length !== 2 || !dotsContainer || !previousButton || !nextButton) return;
 
-  const images = Array.from({ length: 13 }, (_, index) => `/static/image${index + 1}.png`);
+  const useMobileImages = window.matchMedia('(max-width: 768px)').matches;
+  const imageNumbers = Array.from({ length: 13 }, (_, index) => index + 1)
+    .filter((imageNumber) => imageNumber !== 2);
+  const images = imageNumbers.map((imageNumber) => (
+    useMobileImages
+      ? `/static/mobile/image${imageNumber}.webp`
+      : `/static/image${imageNumber}.png`
+  ));
+  if (!useMobileImages) slides[0].src = images[0];
   const dots = images.map((_, index) => {
     const dot = document.createElement('button');
     dot.className = 'hero-carousel-dot';
     dot.type = 'button';
-    dot.setAttribute('aria-label', `Show image ${index + 1} of ${images.length}`);
+    dot.setAttribute('aria-label', `Show image ${imageNumbers[index]} of ${images.length}`);
     dot.setAttribute('aria-pressed', String(index === 0));
     dot.addEventListener('click', () => showSlide(index));
     dotsContainer.appendChild(dot);
@@ -1850,6 +1859,8 @@ function setupHeroCarousel() {
 // ==============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (document.body.classList.contains('admin-body')) return;
+
   startWelcomeFlow();
   setupHeroCarousel();
   setupPizzaSliceScroll();

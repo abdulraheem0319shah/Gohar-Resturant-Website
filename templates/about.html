@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+  <!-- ==============================================================
+       ABOUT US & LOCATION BANNER
+       ============================================================== -->
+  <section id="about" class="section-padding" style="background: #111114;">
+    <div class="container">
+      <article id="ourStory" class="our-story-card">
+        <div class="our-story-emblem">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Restaurant logo" loading="lazy">
+          <span>EST. 1993</span>
+        </div>
+        <div class="our-story-copy">
+          <span class="section-badge">Our Story</span>
+          <h2 class="section-title">A Karachi Table, <span class="gold-text">Made for Sharing</span></h2>
+          <p>
+            Since 1993, Gohar Restaurant has welcomed guests in Orangi Town with the flavors Karachi loves.
+            What began as a neighborhood place to gather has grown into a restaurant for families and friends
+            looking to share a generous meal and warm hospitality.
+          </p>
+          <p>
+            Our menu brings together the character of Pakistani cooking: sizzling BBQ, hearty karahi and handi,
+            comforting curries, Chinese favorites, and something sweet or chilled to finish. Whether you visit
+            for a quick bite or settle in around a platter, we want every meal to feel familiar, satisfying,
+            and worth sharing.
+          </p>
+          <p class="our-story-signoff">Gohar Restaurant · Proudly serving Karachi since 1993</p>
+        </div>
+      </article>
+
+      <div class="section-header">
+        <span class="section-badge">Visit Gohar Restaurant</span>
+        <h2 class="section-title">Location, <span class="gold-text">Hours & Delivery</span></h2>
+        <p class="section-desc">Find us in Orangi Town, Karachi, or contact our team for orders and reservations.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon" aria-hidden="true"><use href="#icon-map"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Prime Location</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Iqbal Market Road, Sector #11, Near Khuda Buksh Bakers, Orangi Town, Karachi, Pakistan.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon" aria-hidden="true"><use href="#icon-clock"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Opening Hours</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;"><strong>Sat – Thu:</strong> 1:00 PM – 1:00 AM<br><strong>Friday:</strong> 2:00 PM – 1:00 AM (After Jummah)</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Order & Helpline</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Direct WhatsApp / Call:<br><strong style="color: var(--gold-primary); font-size: 1.1rem;">03339229300</strong></p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <svg class="ui-icon info-icon delivery-icon" aria-hidden="true"><use href="#icon-truck"></use></svg>
+          <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Delivery Guarantee</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Flat PKR 100 delivery across Orangi Town.<br><strong style="color: #10B981;">FREE Delivery on orders over PKR 1,500!</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-map-card">
+        <div class="restaurant-map-heading">
+          <div>
+            <h3>Find Us on Google Maps</h3>
+            <p>Iqbal Market Road, Sector #11, near Khuda Buksh Bakers, Orangi Town, Karachi</p>
+          </div>
+          <a
+            class="btn-primary-gold map-directions-link"
+            href="https://www.google.com/maps/search/?api=1&amp;query=Gohar+Restaurant%2C+Iqbal+Market+Road%2C+Sector+11%2C+near+Khuda+Buksh+Bakers%2C+Orangi+Town%2C+Karachi"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Get Directions</a>
+        </div>
+        <iframe
+          class="restaurant-map"
+          src="https://maps.google.com/maps?q=Gohar%20Restaurant%2C%20Iqbal%20Market%20Road%2C%20Sector%2011%2C%20near%20Khuda%20Buksh%20Bakers%2C%20Orangi%20Town%2C%20Karachi&amp;output=embed"
+          title="Google Maps location for Gohar Restaurant in Orangi Town, Karachi"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

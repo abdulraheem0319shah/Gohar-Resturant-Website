@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+  <section class="menu-poster-section" aria-label="Gohar Restaurant food menu">
+    <img
+      class="menu-poster-image"
+      src="{{ url_for('static', filename='image2.png') }}"
+      alt="Gohar Restaurant complete food menu"
+      width="1024"
+      height="1536"
+      fetchpriority="high"
+    >
+  </section>
+{% endblock %}

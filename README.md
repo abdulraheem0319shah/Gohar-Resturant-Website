@@ -9,12 +9,12 @@
 1. **Official Luxury Logo Added:** Integrated the high-resolution Gold Chef Cloche & Ornate Filigree emblem (`logo.png`).
 2. **Subtle Background Logo Watermark:** The site background features a low-opacity, fixed watermark of the Gohar Restaurant Logo in the center.
 3. **Dark Slate Culinary Palette:** Inspired by premium dark slate restaurant aesthetics (`#121212`, `#18181A`, `#1E1E1E`), Gold/Amber accents (`#FFC107`, `#FFA000`), Crimson Red (`#E53935`), and crisp white typography.
-4. **Complete Categorized Menu:** The menu page shows the supplied dishes in all 16 categories, with category food photography, exact listed prices, portion selectors where provided, and price ranges/unpriced dishes clearly marked rather than given invented prices.
+4. **Complete Categorized Menu:** The home page shows all dishes in searchable categories with food cards, listed prices, portion selectors where provided, and price ranges/unpriced dishes clearly marked rather than given invented prices. The separate menu page displays the full menu poster image.
 5. **Home Hero Video & Carousel:** The home hero uses the existing muted, looping `video1.mp4` background, followed by the original 13-image carousel. Images display for four seconds, fade out between slides, loop from image 13 to image 1, and support arrows, dots, and pause-on-hover.
 6. **Welcome & Order Setup:** Every page load begins with a branded video-and-logo loading screen. First-time visitors then choose a Karachi area and Pickup or Delivery; saved preferences let returning visitors continue automatically and are reflected in cart and checkout totals.
 7. **Optional Customer Accounts:** Customers can create an account or sign in, but ordering does not require an account. Account emails and securely hashed passwords are stored in the SQLite database. Set `SECRET_KEY` in the environment to keep signed-in sessions valid across server restarts.
 8. **Scroll Reveal Animation:** Page sections and menu cards animate into view as customers scroll, with reduced-motion preferences respected.
-9. **3D Card Flip Animation:** Hovering over a menu card reveals a short description, price, and *"Add to Cart"* action. The menu page also features a restaurant banner and responsive category filters.
+9. **3D Card Flip Animation:** Hovering over a menu card reveals a short description, price, and *"Add to Cart"* action. The home page includes responsive menu filters; `/menu` displays the full menu poster image.
 10. **Realistic 3D Buttons with Hover Jiggle:** All action buttons feature 3D depth and undergo a soft jiggle animation with an amber-gold glow on hover.
 11. **Floating WhatsApp Button (Icon ONLY):** Continuously jumping green WhatsApp icon on the bottom-left linking to `https://wa.me/923339229300` (no visible phone text).
 12. **"Gohar Assistant" AI Concierge:** Floating diamond AI icon on the bottom-right with continuous pulse-jump animation and Pakistani culinary concierge intelligence.
@@ -22,6 +22,9 @@
    - Completely hidden from the public navigation and footer.
    - Accessing `/admin` directly requires `ADMIN_PASSWORD` to be set in the environment; admin login is unavailable when it is unset.
    - Generates itemized printable PDF/HTML receipts for **BOTH Food Delivery Orders and Table Reservations**.
+   - Lets staff add menu items to a saved table-reservation food bill, adjust quantities, and save/reprint the itemized bill.
+   - Starts with a clean database; delivery order numbers and table booking references restart at `GOHAR-0001` and `TBL-0001`.
+   - Enforces the 20-table limit per reservation date and time; cancelled reservations free up a table.
    - Provides customer `Call` and `WhatsApp` actions for saved order and reservation phone numbers. Calls use the device's phone handler; WhatsApp opens a chat so staff can start a voice call there.
 14. **Customer Reviews (`/reviews`):** Customers can submit a 1–5 star rating and a short comment, which are stored in the SQLite database and displayed on the reviews page.
 15. **Dish Likes:** Customers can like each dish once per browser; like totals and visitor likes are stored in SQLite and shown on popular and categorized menu cards.
@@ -41,7 +44,7 @@ Set `ADMIN_PASSWORD`, `SECRET_KEY`, and `GROQ_API_KEY` through environment varia
 
 ## Project structure
 
-Flask HTML templates are in `templates/`. Stylesheets, JavaScript, images, logos, and videos are in `static/` and are served from `/static/`.
+Flask HTML templates are in `templates/`. Public pages use `base.html` and separate `home.html`, `popular.html`, `menu.html`, `about.html`, and `reviews.html` templates, alongside `admin.html`. Stylesheets, JavaScript, images, logos, and videos are in `static/` and are served from `/static/`.
 
 ## Deployment
 

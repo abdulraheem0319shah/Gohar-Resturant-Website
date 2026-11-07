@@ -3,4 +3,5 @@ Flask-Cors
 Flask-SQLAlchemy
 groq
 gunicorn
+python-dotenv
 requests

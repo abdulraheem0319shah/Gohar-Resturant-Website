@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+  <!-- ==============================================================
+       POPULAR ITEMS GRID (TOP 19 DISHES WITH 3D CARD FLIP)
+       ============================================================== -->
+  <section id="popular" class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Chef's Hall of Fame</span>
+        <h2 class="section-title">Our <span class="gold-text">19 Popular Items</span></h2>
+        <p class="section-desc">
+          Hover over any dish to flip the card and reveal appetizing culinary details, prices, and instant Add to Cart!
+        </p>
+      </div>
+
+      <!-- 19 Popular Items Rendered with 3D Flip via JavaScript -->
+      <div id="popularGrid" class="popular-grid"></div>
+    </div>
+  </section>
+
+{% endblock %}

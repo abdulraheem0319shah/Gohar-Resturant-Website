@@ -10,6 +10,9 @@ import uuid
 import datetime
 import re
 import requests
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(os.path.dirname(__file__), '.env'), override=True)
 
 # Ensure UTF-8 output on Windows terminals
 if sys.platform == 'win32':
@@ -33,7 +36,7 @@ GROQ_MODEL = os.environ.get('GROQ_MODEL', 'openai/gpt-oss-120b')
 groq_client = None
 if GROQ_API_KEY:
     try:
-        groq_client = Groq(api_key=GROQ_API_KEY)
+        groq_client = Groq(api_key=GROQ_API_KEY, timeout=15.0)
     except Exception as e:
         print("[!] Could not initialize Groq client:", e)
 
@@ -48,6 +51,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or os.urandom(32)
 
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+RESTAURANT_TABLE_COUNT = 20
 
 db = SQLAlchemy(app)
 
@@ -104,6 +108,12 @@ class TableBooking(db.Model):
     special_requests = db.Column(db.Text, default='')
     status = db.Column(db.String(30), default='Pending')  # Pending, Approved, Cancelled
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    invoice = db.relationship(
+        'TableBookingInvoice',
+        back_populates='booking',
+        uselist=False,
+        cascade='all, delete-orphan'
+    )
 
     def to_dict(self):
         return {
@@ -116,7 +126,23 @@ class TableBooking(db.Model):
             'guests': self.guests,
             'special_requests': self.special_requests,
             'status': self.status,
+            'invoice': self.invoice.to_dict() if self.invoice else None,
             'created_at': self.created_at.strftime('%Y-%m-%d %I:%M %p') if self.created_at else ''
+        }
+
+class TableBookingInvoice(db.Model):
+    __tablename__ = 'table_booking_invoices'
+    booking_id = db.Column(db.Integer, db.ForeignKey('table_bookings.id'), primary_key=True)
+    items_json = db.Column(db.Text, nullable=False, default='[]')
+    subtotal = db.Column(db.Float, nullable=False, default=0.0)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
+    booking = db.relationship('TableBooking', back_populates='invoice')
+
+    def to_dict(self):
+        return {
+            'items': json.loads(self.items_json),
+            'subtotal': self.subtotal,
+            'updated_at': self.updated_at.strftime('%Y-%m-%d %I:%M %p')
         }
 
 class CustomerReview(db.Model):
@@ -219,19 +245,19 @@ def sitemap_xml():
 
 @app.route('/')
 def home():
-    return render_template('index.html', page='home')
+    return render_template('home.html', page='home')
 
 @app.route('/popular')
 def popular_page():
-    return render_template('index.html', page='popular')
+    return render_template('popular.html', page='popular')
 
 @app.route('/menu')
 def menu_page():
-    return render_template('index.html', page='menu')
+    return render_template('menu.html', page='menu')
 
 @app.route('/about')
 def about_page():
-    return render_template('index.html', page='about')
+    return render_template('about.html', page='about')
 
 @app.route('/reviews')
 def reviews_page():
@@ -240,7 +266,7 @@ def reviews_page():
         average_rating = db.session.query(db.func.avg(CustomerReview.rating)).scalar() or 0
         review_count = CustomerReview.query.count()
         return render_template(
-            'index.html',
+            'reviews.html',
             page='reviews',
             reviews=[review.to_dict() for review in reviews],
             average_rating=round(average_rating, 1),
@@ -389,12 +415,8 @@ def place_order():
             delivery_fee = 0.0
         total_price = subtotal + delivery_fee
 
-        import random
-        random_suffix = random.randint(1000, 9999)
-        order_number = f"GOHAR-{random_suffix}"
-
         order = Order(
-            order_number=order_number,
+            order_number=f'PENDING-{uuid.uuid4()}',
             customer_name=customer_name,
             phone=phone,
             address=address,
@@ -408,6 +430,8 @@ def place_order():
         )
 
         db.session.add(order)
+        db.session.flush()
+        order.order_number = f'GOHAR-{order.id:04d}'
         db.session.commit()
 
         return jsonify({
@@ -438,11 +462,19 @@ def book_table():
         if not name or not phone or not date or not time:
             return jsonify({'success': False, 'error': 'All booking fields are required'}), 400
 
-        import random
-        booking_code = f"TBL-{random.randint(100, 999)}"
+        db.session.execute(db.text('BEGIN IMMEDIATE'))
+        reservations_at_time = TableBooking.query.filter_by(date=date, time=time).filter(
+            TableBooking.status != 'Cancelled'
+        ).count()
+        if reservations_at_time >= RESTAURANT_TABLE_COUNT:
+            db.session.rollback()
+            return jsonify({
+                'success': False,
+                'error': 'Sorry, all 20 tables are reserved for this date and time. Please choose another time.'
+            }), 409
 
         booking = TableBooking(
-            booking_code=booking_code,
+            booking_code=f'PENDING-{uuid.uuid4()}',
             name=name,
             phone=phone,
             date=date,
@@ -453,11 +485,13 @@ def book_table():
         )
 
         db.session.add(booking)
+        db.session.flush()
+        booking.booking_code = f'TBL-{booking.id:04d}'
         db.session.commit()
 
         return jsonify({
             'success': True,
-            'message': f"Table reservation requested! Reference code: {booking_code}.",
+            'message': f"Table reservation requested! Reference code: {booking.booking_code}.",
             'booking': booking.to_dict()
         }), 201
 
@@ -630,6 +664,70 @@ def get_bookings():
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/booking/<int:booking_id>/invoice', methods=['PUT'])
+def save_booking_invoice(booking_id):
+    if not is_admin():
+        return jsonify({'success': False, 'error': 'Unauthorized. Please login.'}), 401
+
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict) or not isinstance(data.get('items'), list):
+        return jsonify({'success': False, 'error': 'Invoice items must be provided as a list.'}), 400
+    if len(data['items']) > 50:
+        return jsonify({'success': False, 'error': 'An invoice can contain up to 50 different items.'}), 400
+
+    items = []
+    subtotal = 0.0
+    for item in data['items']:
+        if not isinstance(item, dict):
+            return jsonify({'success': False, 'error': 'Each invoice item must be an object.'}), 400
+        name = item.get('name')
+        variant = item.get('variant', '')
+        price = item.get('price')
+        quantity = item.get('qty')
+        if (not isinstance(name, str) or not name.strip() or len(name.strip()) > 120 or
+                not isinstance(variant, str) or len(variant) > 100 or
+                isinstance(price, bool) or not isinstance(price, (int, float)) or
+                not 0 <= price <= 100000 or
+                isinstance(quantity, bool) or not isinstance(quantity, int) or
+                not 1 <= quantity <= 99):
+            return jsonify({'success': False, 'error': 'Invoice item details are invalid.'}), 400
+
+        normalized_item = {
+            'id': item.get('id'),
+            'name': name.strip(),
+            'variant': variant.strip(),
+            'price': round(float(price), 2),
+            'qty': quantity
+        }
+        items.append(normalized_item)
+        subtotal += normalized_item['price'] * quantity
+
+    try:
+        booking = db.session.get(TableBooking, booking_id)
+        if not booking:
+            return jsonify({'success': False, 'error': 'Booking not found.'}), 404
+
+        invoice = booking.invoice
+        if not items:
+            if invoice:
+                db.session.delete(invoice)
+            db.session.commit()
+            return jsonify({'success': True, 'invoice': None})
+
+        if invoice is None:
+            invoice = TableBookingInvoice(booking=booking)
+            db.session.add(invoice)
+        invoice.items_json = json.dumps(items)
+        invoice.subtotal = round(subtotal, 2)
+        invoice.updated_at = datetime.datetime.utcnow()
+        db.session.commit()
+        return jsonify({'success': True, 'invoice': invoice.to_dict()})
+    except Exception:
+        db.session.rollback()
+        app.logger.exception('Could not save table booking invoice')
+        return jsonify({'success': False, 'error': 'Could not save the table bill.'}), 500
 
 
 @app.route('/api/booking/<int:booking_id>/status', methods=['POST'])
@@ -830,42 +928,6 @@ def chat_ai():
 def init_db():
     with app.app_context():
         db.create_all()
-        if Order.query.count() == 0:
-            sample_items = [
-                {"id": 3, "name": "Crispy Broast Leg", "price": 490, "qty": 2, "total": 980},
-                {"id": 6, "name": "Zinger Cheese Burger", "price": 420, "qty": 1, "total": 420},
-                {"id": 1, "name": "Oreo Shake", "price": 320, "qty": 1, "total": 320}
-            ]
-            sample_order = Order(
-                order_number="GOHAR-1993",
-                customer_name="Muhammad Usman",
-                phone="0333-1234567",
-                address="House #42, Sector 11-E, Orangi Town, Karachi",
-                notes="Extra garlic mayo sauce please",
-                items_json=json.dumps(sample_items),
-                subtotal=1720.0,
-                delivery_fee=0.0,
-                total_price=1720.0,
-                payment_method="Cash on Delivery",
-                status="Pending",
-                created_at=datetime.datetime.utcnow() - datetime.timedelta(minutes=25)
-            )
-            db.session.add(sample_order)
-
-            sample_booking = TableBooking(
-                booking_code="TBL-501",
-                name="Tariq Mahmood",
-                phone="0321-9876543",
-                date=datetime.date.today().strftime('%Y-%m-%d'),
-                time="08:30 PM",
-                guests=4,
-                special_requests="Corner family table for birthday celebration",
-                status="Approved",
-                created_at=datetime.datetime.utcnow() - datetime.timedelta(hours=2)
-            )
-            db.session.add(sample_booking)
-            db.session.commit()
-            print("[*] Database initialized with sample order and booking.")
 
 init_db()
 
