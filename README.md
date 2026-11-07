@@ -38,3 +38,7 @@ Set `ADMIN_PASSWORD`, `SECRET_KEY`, and `GROQ_API_KEY` through environment varia
 ## 🚀 Live Access:
 - **Main Website:** [http://127.0.0.1:5000](http://127.0.0.1:5000)
 - **Admin Dashboard:** [http://127.0.0.1:5000/admin](http://127.0.0.1:5000/admin) *(configure `ADMIN_PASSWORD` in the environment)*
+
+## Project structure
+
+Flask HTML templates are in `templates/`. Stylesheets, JavaScript, images, logos, and videos are in `static/` and are served from `/static/`.

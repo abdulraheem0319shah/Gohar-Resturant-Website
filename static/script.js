@@ -1378,7 +1378,7 @@ function viewOrderInvoice(orderData) {
   invoiceContainer.innerHTML = `
     <div class="invoice-header">
       <div class="invoice-brand">
-        <img class="invoice-logo-img" src="logo.png" alt="Gohar Restaurant Logo">
+        <img class="invoice-logo-img" src="/static/logo.png" alt="Gohar Restaurant Logo">
         <div>
           <h2 style="font-size: 1.5rem; color: #1a1a1a;">Gohar Restaurant</h2>
           <div style="font-size: 0.95rem; font-weight: bold; color: #b37400;">گوھر ریسٹورینٹ - اورنگی ٹاؤن، کراچی</div>
@@ -1469,7 +1469,7 @@ function viewReservationInvoice(bookingData) {
   invoiceContainer.innerHTML = `
     <div class="invoice-header">
       <div class="invoice-brand">
-        <img class="invoice-logo-img" src="logo.png" alt="Gohar Restaurant Logo">
+        <img class="invoice-logo-img" src="/static/logo.png" alt="Gohar Restaurant Logo">
         <div>
           <h2 style="font-size: 1.5rem; color: #1a1a1a;">Gohar Restaurant</h2>
           <div style="font-size: 0.95rem; font-weight: bold; color: #b37400;">گوھر ریسٹورینٹ - اورنگی ٹاؤن، کراچی</div>
@@ -1751,7 +1751,7 @@ function setupHeroCarousel() {
   const nextButton = section?.querySelector('.hero-carousel-next');
   if (slides.length !== 2 || !dotsContainer || !previousButton || !nextButton) return;
 
-  const images = Array.from({ length: 13 }, (_, index) => `image${index + 1}.png`);
+  const images = Array.from({ length: 13 }, (_, index) => `/static/image${index + 1}.png`);
   const dots = images.map((_, index) => {
     const dot = document.createElement('button');
     dot.className = 'hero-carousel-dot';

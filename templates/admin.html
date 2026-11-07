@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure Admin Panel - Gohar Restaurant (گوھر ریسٹورینٹ)</title>
   
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=30">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=30">
   <style>
     body { font-family: 'Outfit', sans-serif; }
     
@@ -75,7 +75,7 @@
   <!-- ADMIN HEADER -->
   <header class="admin-header" style="background: #18181b; border-bottom: 1px solid var(--border-gold); padding: 16px 28px; display: flex; align-items: center; justify-content: space-between;">
     <div style="display: flex; align-items: center; gap: 14px;">
-      <img src="logo.png" style="width: 48px; height: 48px; border-radius: 50%;" alt="Gohar Logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" style="width: 48px; height: 48px; border-radius: 50%;" alt="Gohar Logo">
       <div>
         <h2 style="font-size: 1.35rem; font-weight: 800;">
           Gohar Restaurant <span class="gold-text">Secure Admin</span>
@@ -101,7 +101,7 @@
        ============================================================== -->
   <div id="loginScreen" class="admin-login-wrap" style="display: flex;">
     <div class="admin-login-card">
-      <img src="logo.png" style="width: 76px; height: 76px; margin: 0 auto 16px; border-radius: 50%; filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.5));" alt="Gohar Logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" style="width: 76px; height: 76px; margin: 0 auto 16px; border-radius: 50%; filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.5));" alt="Gohar Logo">
       <h3 style="font-size: 1.6rem; margin-bottom: 6px;">Admin Authorization</h3>
       <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 24px;">
         This portal is restricted to Gohar Restaurant staff. Please enter your administrator key.
@@ -586,7 +586,7 @@
       invoiceContainer.innerHTML = `
         <div class="invoice-header">
           <div class="invoice-brand">
-            <img class="invoice-logo-img" src="logo.png" alt="Gohar Logo">
+            <img class="invoice-logo-img" src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Logo">
             <div>
               <h2 style="font-size: 1.5rem; color: #1a1a1a;">Gohar Restaurant</h2>
               <div style="font-size: 0.95rem; font-weight: bold; color: #b37400;">گوھر ریسٹورینٹ - اورنگی ٹاؤن، کراچی</div>
@@ -671,7 +671,7 @@
       invoiceContainer.innerHTML = `
         <div class="invoice-header">
           <div class="invoice-brand">
-            <img class="invoice-logo-img" src="logo.png" alt="Gohar Logo">
+            <img class="invoice-logo-img" src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Logo">
             <div>
               <h2 style="font-size: 1.5rem; color: #1a1a1a;">Gohar Restaurant</h2>
               <div style="font-size: 0.95rem; font-weight: bold; color: #b37400;">گوھر ریسٹورینٹ - اورنگی ٹاؤن، کراچی</div>

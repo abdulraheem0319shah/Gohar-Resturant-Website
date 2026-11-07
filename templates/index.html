@@ -20,7 +20,7 @@
   {% set canonical_url = (config['PUBLIC_BASE_URL'] or request.url_root.rstrip('/')) ~ request.path %}
   {% set seo_title = seo_titles.get(page, seo_titles['home']) %}
   {% set seo_description = seo_descriptions.get(page, seo_descriptions['home']) %}
-  {% set restaurant_logo_url = (config['PUBLIC_BASE_URL'] or request.url_root.rstrip('/')) ~ '/logo.png' %}
+  {% set restaurant_logo_url = (config['PUBLIC_BASE_URL'] or request.url_root.rstrip('/')) ~ url_for('static', filename='logo.png') %}
   <title>{{ seo_title }}</title>
   <meta name="description" content="{{ seo_description }}">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -61,7 +61,7 @@
   </script>
 
   <!-- Favicon using Gohar Restaurant Logo -->
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
   
   <!-- Google Fonts: Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=31">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=31">
   <script>
     try {
       const markedAt = Number(sessionStorage.getItem('gohar_skip_welcome_once'));
@@ -102,11 +102,11 @@
 
   <div id="welcomeLoader" class="welcome-loader" hidden aria-live="polite">
     <video class="welcome-loader-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-      <source src="video1.mp4" type="video/mp4">
+      <source src="{{ url_for('static', filename='video1.mp4') }}" type="video/mp4">
     </video>
     <div class="welcome-loader-shade"></div>
     <div class="welcome-loader-content">
-      <img src="logo.png" alt="Gohar Restaurant" class="welcome-loader-logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Restaurant" class="welcome-loader-logo">
       <p class="welcome-loader-name">GOHAR RESTAURANT</p>
       <span class="welcome-loader-est">EST. 1993 · KARACHI</span>
       <div class="welcome-loader-progress" aria-hidden="true"><span></span></div>
@@ -117,7 +117,7 @@
   <section id="orderSetup" class="order-setup-screen" role="dialog" aria-modal="true"
     aria-labelledby="orderSetupTitle" hidden>
     <div class="order-setup-card">
-      <img src="logo.png" alt="" class="order-setup-logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="" class="order-setup-logo">
       <span class="section-badge">WELCOME TO GOHAR</span>
       <h2 id="orderSetupTitle" class="order-setup-title">Where should we serve you?</h2>
       <p class="order-setup-copy">Choose your Karachi area and how you would like to receive your order. Delivery availability may be confirmed by the restaurant.</p>
@@ -213,7 +213,7 @@
     <div class="nav-container">
       <!-- Gohar Restaurant Brand Logo -->
       <a href="#" class="brand-logo" aria-label="Gohar Restaurant Home">
-        <img class="brand-logo-img" src="logo.png" alt="Gohar Restaurant Logo">
+        <img class="brand-logo-img" src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Restaurant Logo">
         <div class="brand-text">
           <h1>Gohar <span class="gold-text">Restaurant</span></h1>
           <span class="tagline">Est. 1993 • Orangi Town</span>
@@ -267,7 +267,7 @@
     <video class="hero-video" autoplay muted loop playsinline preload="metadata"
       poster="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop"
       aria-hidden="true" tabindex="-1">
-      <source src="video1.mp4" type="video/mp4">
+      <source src="{{ url_for('static', filename='video1.mp4') }}" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
@@ -329,7 +329,7 @@
 
   <section id="heroCarouselSection" class="hero-carousel-section" aria-label="Gohar Restaurant photo gallery">
     <div id="heroCarousel" class="hero-carousel" role="region" aria-label="Gohar Restaurant image carousel" tabindex="0">
-      <img class="hero-carousel-slide is-active" src="image1.png" alt="" aria-hidden="true">
+      <img class="hero-carousel-slide is-active" src="{{ url_for('static', filename='image1.png') }}" alt="" aria-hidden="true">
       <img class="hero-carousel-slide" alt="" aria-hidden="true">
     </div>
     <button class="hero-carousel-arrow hero-carousel-prev" type="button" aria-label="Show previous image">
@@ -350,7 +350,7 @@
       </div>
       <div class="pizza-scroll-stage">
         <div class="pizza-scroll-art">
-          <img class="pizza-scroll-image" src="image14.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
+          <img class="pizza-scroll-image" src="{{ url_for('static', filename='image14.png') }}" alt="" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
         </div>
       </div>
     </div>
@@ -387,7 +387,7 @@
 
       <div class="menu-feature-banner">
         <div class="menu-feature-copy">
-          <img src="logo.png" alt="Gohar Restaurant logo" class="menu-feature-logo">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Restaurant logo" class="menu-feature-logo">
           <div>
             <span class="menu-feature-kicker">Gohar Restaurant • Est. 1993</span>
             <h3>Good food brings people together</h3>
@@ -440,7 +440,7 @@
     <div class="container">
       <article id="ourStory" class="our-story-card">
         <div class="our-story-emblem">
-          <img src="logo.png" alt="Gohar Restaurant logo" loading="lazy">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Restaurant logo" loading="lazy">
           <span>EST. 1993</span>
         </div>
         <div class="our-story-copy">
@@ -589,7 +589,7 @@
       <button class="modal-close-icon" onclick="closeModal('tableBookingModal')" aria-label="Close Modal">&times;</button>
       
       <div class="modal-header">
-        <img src="logo.png" style="width: 60px; height: 60px; margin: 0 auto 10px; display: block;" alt="Gohar Logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" style="width: 60px; height: 60px; margin: 0 auto 10px; display: block;" alt="Gohar Logo">
         <h3 style="font-size: 1.5rem; margin-bottom: 4px;">Book a Family Table</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted);">
           Reserve your table at Gohar Restaurant, Orangi Town for guaranteed seating and priority hospitality.
@@ -651,7 +651,7 @@
     <section class="modal-box customer-account-modal" role="dialog" aria-modal="true" aria-labelledby="customerAccountTitle">
       <button class="modal-close-icon" type="button" onclick="closeModal('customerAccountModal')" aria-label="Close sign-in dialog">&times;</button>
       <div class="modal-header">
-        <img src="logo.png" class="customer-account-logo" alt="">
+        <img src="{{ url_for('static', filename='logo.png') }}" class="customer-account-logo" alt="">
         <h2 id="customerAccountTitle">Your Gohar Account</h2>
         <p>Sign in if you like. An account is optional—browse and order without one.</p>
       </div>
@@ -837,7 +837,7 @@
 
   <!-- 2. Gohar Live Support Trigger (Bottom-Right) - Real Brand Concierge -->
   <button class="floating-assistant-btn" onclick="toggleAssistantChat()" aria-label="Live Support Gohar Restaurant">
-    <img class="support-btn-img" src="logo.png" alt="Gohar Support">
+    <img class="support-btn-img" src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Support">
     <span class="support-online-badge">ONLINE</span>
   </button>
 
@@ -846,7 +846,7 @@
     <div class="chat-header">
       <div class="chat-header-info">
         <div class="assistant-avatar">
-          <img src="logo.png" alt="Gohar Logo">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Logo">
         </div>
         <div>
           <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Gohar Customer Support</h4>
@@ -889,7 +889,7 @@
       <div class="footer-grid">
         <div class="footer-col">
           <div class="brand-logo" style="margin-bottom: 14px;">
-            <img class="brand-logo-img" src="logo.png" alt="Gohar Restaurant Logo" style="width: 48px; height: 48px;">
+            <img class="brand-logo-img" src="{{ url_for('static', filename='logo.png') }}" alt="Gohar Restaurant Logo" style="width: 48px; height: 48px;">
             <div class="brand-text">
               <h3 style="font-size: 1.3rem;">Gohar Restaurant</h3>
               <span class="tagline">Est. 1993 • گوھر ریسٹورینٹ</span>
@@ -936,6 +936,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=29"></script>
+  <script src="{{ url_for('static', filename='script.js') }}?v=29"></script>
 </body>
 </html>

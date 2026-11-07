@@ -37,7 +37,7 @@ if GROQ_API_KEY:
     except Exception as e:
         print("[!] Could not initialize Groq client:", e)
 
-app = Flask(__name__, static_folder='.', static_url_path='', template_folder='.')
+app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 app.config['PUBLIC_BASE_URL'] = os.environ.get('PUBLIC_BASE_URL', '').rstrip('/')
 
