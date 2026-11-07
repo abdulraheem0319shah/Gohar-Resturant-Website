@@ -3522,22 +3522,72 @@ body:not([data-page="reviews"]) #reviews {
     gap: 10px;
   }
   .card-flip-container {
-    height: 350px;
+    height: 292px;
   }
   .card-img-wrap {
-    height: 125px;
-    flex: 0 0 125px;
+    height: 104px;
+    flex: 0 0 104px;
   }
   .card-front-body {
-    padding: 10px;
+    min-height: 0;
+    padding: 11px;
   }
   .card-cat {
-    font-size: 0.58rem;
+    font-size: 0.64rem;
     letter-spacing: 0.4px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
   }
   .card-title {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .card-front-footer > span:first-child {
+    font-size: 1rem !important;
+    line-height: 1.25;
+  }
+  .dish-rating {
+    flex-wrap: wrap;
+    gap: 3px;
+    font-size: 0.7rem;
+  }
+  .card-back {
+    gap: 7px;
+    padding: 12px;
+  }
+  .card-back-header {
+    padding-bottom: 8px;
+  }
+  .card-back-title {
+    font-size: 1rem;
     line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .card-back-praise {
+    padding: 9px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  .card-back-price {
+    font-size: 1.1rem;
+  }
+  .card-back-meta {
+    gap: 6px;
+  }
+  .card-back-meta .btn-add-cart {
+    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+  .menu-option-label {
+    font-size: 0.75rem;
+  }
+  .menu-option-select {
+    max-width: 100%;
+    min-height: 36px;
+    padding: 6px 8px;
+    font-size: 0.78rem;
   }
   .category-items-grid .card-front-body > p {
     display: none;
@@ -3589,6 +3639,20 @@ body:not([data-page="reviews"]) #reviews {
   .invoice-action-bar > button {
     flex: 1 1 120px;
     justify-content: center;
+  }
+}
+
+@media (max-width: 359px) {
+  .popular-grid,
+  .category-items-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card-flip-container {
+    height: 330px;
+  }
+  .card-img-wrap {
+    height: 145px;
+    flex-basis: 145px;
   }
 }
 
