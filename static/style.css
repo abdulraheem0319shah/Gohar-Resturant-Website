@@ -53,9 +53,16 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
   font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 html.needs-order-setup,
@@ -1230,6 +1237,45 @@ h1, h2, h3, h4, h5, h6 {
   gap: 28px;
 }
 
+.menu-category-list {
+  display: grid;
+  gap: 42px;
+}
+
+.menu-category-section {
+  min-width: 0;
+  scroll-margin-top: 110px;
+}
+
+.menu-category-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.menu-category-title {
+  color: var(--gold-primary);
+  font-size: clamp(1.25rem, 2.4vw, 1.8rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.menu-category-heading p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.menu-empty-state {
+  padding: 40px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 .card-flip-container {
   position: relative;
   perspective: 1200px;
@@ -1297,6 +1343,38 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+}
+
+.card-logo-splash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 8, 8, 0.88);
+  pointer-events: none;
+}
+
+.card-flip-container.is-logo-visible .card-logo-splash {
+  animation: cardLogoFade 1.2s ease-out forwards;
+}
+
+.card-logo-splash img {
+  display: block;
+  width: min(58%, 170px);
+  height: 88%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(255, 193, 7, 0.28));
+}
+
+@keyframes cardLogoFade {
+  0%, 52% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1409,6 +1487,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .card-logo-splash {
+    display: none;
+    animation: none;
+  }
   .scroll-reveal {
     opacity: 1;
     transform: none;
@@ -1659,6 +1741,18 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: auto;
   margin-bottom: 0;
   padding-top: 0;
+}
+
+@media (max-width: 600px) {
+  .menu-category-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .menu-category-heading p {
+    text-align: left;
+  }
 }
 
 /* ==============================================================
@@ -2696,14 +2790,14 @@ body:not([data-page="reviews"]) #reviews {
 .menu-poster-section {
   display: flex;
   justify-content: center;
-  padding: 18px 12px;
+  padding: 0;
   background: #080808;
 }
 
 .menu-poster-image {
   display: block;
   width: 100%;
-  max-width: 1024px;
+  max-width: 1280px;
   height: auto;
 }
 
@@ -3528,8 +3622,11 @@ body:not([data-page="reviews"]) #reviews {
     height: 330px;
   }
   .card-img-wrap {
-    height: 104px;
-    flex: 0 0 104px;
+    height: 128px;
+    flex: 0 0 128px;
+  }
+  .card-img {
+    object-position: center;
   }
   .card-front-body {
     min-height: 0;
@@ -3654,8 +3751,8 @@ body:not([data-page="reviews"]) #reviews {
     height: 330px;
   }
   .card-img-wrap {
-    height: 145px;
-    flex-basis: 145px;
+    height: 155px;
+    flex-basis: 155px;
   }
 }
 

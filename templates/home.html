@@ -105,34 +105,9 @@
         <p class="section-desc">Browse every category, find your favorites, and add dishes to your cart.</p>
       </div>
 
-      <div class="menu-controls">
-        <div class="search-box-wrap">
-          <svg class="search-icon ui-icon" aria-hidden="true"><use href="#icon-search"></use></svg>
-          <input type="search" id="menuSearchInput" class="search-input" placeholder="Search dishes or ingredients..." aria-label="Search menu dishes or ingredients">
-        </div>
+      {% include "menu_controls.html" %}
 
-        <div class="category-tabs">
-          <button class="cat-tab-btn active" data-category="ALL">All Items</button>
-          <button class="cat-tab-btn" data-category="STARTER">Starter</button>
-          <button class="cat-tab-btn" data-category="KARAHI">Karahi</button>
-          <button class="cat-tab-btn" data-category="HANDI">Handi</button>
-          <button class="cat-tab-btn" data-category="PAKISTANI CURRY">Pakistani Curry</button>
-          <button class="cat-tab-btn" data-category="BAR B Q">Bar B Q</button>
-          <button class="cat-tab-btn" data-category="BURGER">Burger</button>
-          <button class="cat-tab-btn" data-category="BROAST">Broast</button>
-          <button class="cat-tab-btn" data-category="CHINESE CUISINE">Chinese Cuisine</button>
-          <button class="cat-tab-btn" data-category="RICE">Rice</button>
-          <button class="cat-tab-btn" data-category="SANDWICH">Sandwich</button>
-          <button class="cat-tab-btn" data-category="CHICKEN & BEEF ROLLS">Chicken & Beef Rolls</button>
-          <button class="cat-tab-btn" data-category="NOODLES & PASTA">Noodles & Pasta</button>
-          <button class="cat-tab-btn" data-category="FRIES">Fries</button>
-          <button class="cat-tab-btn" data-category="HOT TANDOOR">Hot Tandoor</button>
-          <button class="cat-tab-btn" data-category="PLATTERS">Platters</button>
-          <button class="cat-tab-btn" data-category="DESSERTS, SHAKES & MOCKTAILS">Desserts, Shakes & Mocktails</button>
-        </div>
-      </div>
-
-      <div id="categoryGrid" class="category-items-grid"></div>
+      <div id="categoryGrid" class="menu-category-list"></div>
     </div>
   </section>
 

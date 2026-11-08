@@ -305,14 +305,19 @@ const MENU_CATEGORIES = [
     ["Crispy Cheese Sandwich", 700], ["Club Sandwich", 550], ["Club Cheese Sandwich", 600],
     ["Chk Sandwich", 500], ["Chk Cheese Sandwich", 550]
   ] },
-  { name: "CHICKEN & BEEF ROLLS", items: [
+  { name: "CHICKEN ROLL", items: [
     ["Chk Chutney Roll", 220], ["Chk Mayo Roll", 270], ["Chk Cheese Mayo Roll", 300],
     ["Chk Crispy Roll", 330], ["Chk Crispy Cheese Roll", 380], ["Chk Malai Boti Roll", 280],
-    ["Chk Malai Boti Cheese Roll", 320], ["Beef Chutney Roll", 240], ["Beef Mayo Roll", 280],
+    ["Chk Malai Boti Cheese Roll", 320]
+  ] },
+  { name: "BEEF ROLL", items: [
+    ["Beef Chutney Roll", 240], ["Beef Mayo Roll", 280],
     ["Beef Cheese Mayo Roll", 320], ["Beef Kabab Roll", 260]
   ] },
-  { name: "NOODLES & PASTA", items: [
-    ["Chk Chow Mein", 900], ["Vegetable Chow Mein", 800], ["Chk Spicy Chow Mein", 950],
+  { name: "NOODLES", items: [
+    ["Chk Chow Mein", 900], ["Vegetable Chow Mein", 800], ["Chk Spicy Chow Mein", 950]
+  ] },
+  { name: "PASTA", items: [
     ["Fettuccine Alfredo", 1000], ["Penne Arabiata Pasta", 1100]
   ] },
   { name: "FRIES", items: [
@@ -322,18 +327,42 @@ const MENU_CATEGORIES = [
   { name: "HOT TANDOOR", items: [
     ["Puri Paratha", 150], ["Puri Paratha Small", 100], ["Chapati", 25]
   ] },
-  { name: "PLATTERS", items: [
-    ["Classic 2 Person Platter", 2000], ["Classic 4 Person Platter", 3800],
-    ["Gohar Special 4 Person Platter", null], ["BBQ 3 Person Platter", null]
+  { name: "ADD ON", items: [
+    ["Cole Slaw", 120], ["Green Salad", 80], ["Raita", 60],
+    ["Chutney", 60], ["Extra Bun", 50], ["Sauce Dip", 40]
   ] },
-  { name: "DESSERTS, SHAKES & MOCKTAILS", items: [
-    ["Special Falooda", 420],
-    ["Ice Cream (Pista, Kulfa, Tutti Fruiti, Mango, Chocolate Chips, Strawberry Ripple, Pineapple, Blueberry, Vanilla Creamy)", [["1 Scoop", 110], ["2 Scoops", 220]]],
+  { name: "BEVERAGES", items: [
+    ["Buddy Pack", 110], ["Buddy Pack Sting", 120],
+    ["M. Water Small", 90], ["M. Water Large", 130]
+  ] },
+  { name: "DEALS & PLATTERS", items: [
+    ["Gohar Special 4 Person", 3200, "Chicken Handi quarter, Chicken Kasturi Handi quarter, Bihari Boti, Malai Boti, Reshmi Kabab, Seekh Kabab, broast leg or chicken sandwich, chapati, puri paratha, and pulao rice with grilled tomato and green chili."],
+    ["Classic 2 Person", 2000, "Chicken Malai Boti, Chicken Bihari Boti, Reshmi Kabab, Seekh Kabab, Tikka Leg, and pulao rice with grilled tomato and green chili."],
+    ["Classic 4 Person", 3800, "Chicken Malai Boti, Chicken Bihari Boti, Reshmi Kabab, Seekh Kabab, Tikka Leg, and pulao rice with grilled tomato and green chili."],
+    ["BBQ 3 Person", 3000, "Chicken Malai Boti, Chicken Bihari Boti, Beef Bihari Boti, Dhaga Kabab, Reshmi Kabab, Gola Kabab, Tikka Bihari, Tikka Leg, chapati, puri paratha, and pulao rice with grilled tomato and green chili."]
+  ] },
+  { name: "ICE CREAM", items: [
+    ["Pista Nuts", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Kulfa Nuts", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Tutti Fruiti", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Mango", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Chocolate Chips", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Strawberry Ripple", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Pineapple", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Blueberry", [["1 Scoop", 110], ["2 Scoops", 220]]],
+    ["Vanilla Creamy", [["1 Scoop", 110], ["2 Scoops", 220]]]
+  ] },
+  { name: "DESSERT", items: [["Special Falooda", 420]] },
+  { name: "SHAKE", items: [
     ["Banana Date Shake", 300], ["Banana Shake", 250], ["Date Shake", 350],
     ["Oreo Shake", 350], ["Nutella Shake", 400], ["Cold Coffee", 400],
-    ["Mango / Pineapple / Strawberry / Blueberry / Chocolate Ice Cream Shakes", "300–350"],
-    ["Lemon Mint Glacier", 250], ["Fresh Lime", 180],
-    ["Blue Breeze / Pina Colada / Blue Colada", "280–300"]
+    ["Mango Ice Cream Shake", 300], ["Pineapple Ice Cream Shake", 300],
+    ["Strawberry Ice Cream Shake", 300], ["Blueberry Ice Cream Shake", 300],
+    ["Chocolate Ice Cream Shake", 350]
+  ] },
+  { name: "MOCKTAIL", items: [
+    ["Lemon Mint Glacier", 250], ["Fresh Lime", 180], ["Blue Breeze", 300],
+    ["Pina Colada", 280], ["Blue Colada", 280]
   ] }
 ];
 
@@ -350,11 +379,19 @@ const MENU_DESCRIPTIONS = {
   RICE: "A freshly prepared rice dish seasoned for a satisfying meal.",
   SANDWICH: "A generously filled sandwich served with fries.",
   "CHICKEN & BEEF ROLLS": "A warm, hand-rolled wrap filled with savory flavor.",
-  "NOODLES & PASTA": "A comforting bowl of noodles or pasta, made to order.",
+  "CHICKEN ROLL": "A warm chicken roll filled with savory flavor.",
+  "BEEF ROLL": "A warm beef roll filled with savory flavor.",
+  NOODLES: "A comforting bowl of noodles, made to order.",
+  PASTA: "A comforting pasta dish, made to order.",
   FRIES: "Golden, crisp fries with a savory finish.",
   "HOT TANDOOR": "Fresh from the tandoor, warm and ready to pair with your meal.",
-  PLATTERS: "A shareable feast of restaurant favorites.",
-  "DESSERTS, SHAKES & MOCKTAILS": "A chilled, sweet or refreshing finish to your meal."
+  "ADD ON": "A fresh side or dip to complete your meal.",
+  BEVERAGES: "A chilled drink to enjoy with your meal.",
+  "DEALS & PLATTERS": "A shareable feast of restaurant favorites.",
+  "ICE CREAM": "A creamy scoop of your favorite ice cream.",
+  DESSERT: "A traditional sweet finish to your meal.",
+  SHAKE: "A chilled, creamy shake made to order.",
+  MOCKTAIL: "A cool, refreshing drink made to order."
 };
 const MENU_CATEGORY_IMAGES = {
   STARTER: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=85",
@@ -367,15 +404,48 @@ const MENU_CATEGORY_IMAGES = {
   "CHINESE CUISINE": "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=700&q=85",
   RICE: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=700&q=85",
   SANDWICH: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=85",
-  "CHICKEN & BEEF ROLLS": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=85",
-  "NOODLES & PASTA": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=700&q=85",
+  "CHICKEN ROLL": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=85",
+  "BEEF ROLL": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=85",
+  NOODLES: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=700&q=85",
+  PASTA: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=85",
   FRIES: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=700&q=85",
   "HOT TANDOOR": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=700&q=85",
-  PLATTERS: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=85",
-  "DESSERTS, SHAKES & MOCKTAILS": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=700&q=85"
+  "ADD ON": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=85",
+  BEVERAGES: "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=85",
+  "DEALS & PLATTERS": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=85",
+  "ICE CREAM": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=700&q=85",
+  DESSERT: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=85",
+  SHAKE: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=700&q=85",
+  MOCKTAIL: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=85"
 };
+const FOOD_IMAGE_ALIASES = {
+  "Chk Dynamite": "Chicken Dynamite",
+  "Chk Karahi": "chk karahi",
+  "Chicken Masala Rice": "Chk Masala Rice",
+  "Gohar Special Falooda": "Special Falooda",
+  "Pista Ice Cream (2 Scoops)": "Pista Nuts",
+  "Chicken Chow Mein": "Chk Chow Mein",
+  "Mirchi Vada with Tea & Raita": "Chicken Dynamite",
+  "French Fries": "Plain Fries",
+  "Broasted Chicken": "QTR Broast Chest",
+  "Sandwich & Salad": "Club Sandwich",
+  "Chocolate Milkshake": "Chocolate Ice Cream Shake",
+  "Zinger Burger & Fries": "Zinger Burger",
+  "Fried Kabab": "Beef Gola Kabab",
+  "Chicken Do Pyaza": "Chk Handi",
+  "Special Lassi": "Banana Shake",
+  "Magaz Fried": "Beef Karahi",
+  "Tikka & Paratha": "Chk Tikka Leg",
+  "Dhaga Kabab": "Beef Dhaga Kabab"
+};
+const FOOD_IMAGE_FALLBACK = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80";
+function getFoodImageUrl(name) {
+  const imageName = FOOD_IMAGE_ALIASES[name] || name;
+  return `/static/${encodeURIComponent(imageName)}.png`;
+}
+
 const FULL_CATEGORIZED_MENU = MENU_CATEGORIES.flatMap(({ name: category, description, items }) =>
-  items.map(([name, pricing]) => {
+  items.map(([name, pricing, itemDescription]) => {
     const options = Array.isArray(pricing)
       ? pricing.map(([label, price]) => ({ label, price }))
       : null;
@@ -384,21 +454,20 @@ const FULL_CATEGORIZED_MENU = MENU_CATEGORIES.flatMap(({ name: category, descrip
     const priceLabel = options
       ? options.map(option => `${option.label}: Rs. ${option.price}`).join(" / ")
       : price !== null ? `Rs. ${price}` : pricing ? `Rs. ${pricing}` : "Price not listed";
-    const cookingNote = [MENU_DESCRIPTIONS[category], description].filter(Boolean).join(" ");
+    const cookingNote = [itemDescription, MENU_DESCRIPTIONS[category], description].filter(Boolean).join(" ");
     return {
       id: nextMenuItemId++,
       name,
       category,
       price,
       options,
-      flavors: name.startsWith("Ice Cream (")
-        ? ["Pista", "Kulfa", "Tutti Fruiti", "Mango", "Chocolate Chips", "Strawberry Ripple", "Pineapple", "Blueberry", "Vanilla Creamy"]
-        : null,
+      flavors: null,
       hasPriceRange,
       priceLabel,
       desc: cookingNote,
       praise: `${name}: ${cookingNote}`,
-      img: MENU_CATEGORY_IMAGES[category]
+      img: getFoodImageUrl(name),
+      imageFallback: MENU_CATEGORY_IMAGES[category] || FOOD_IMAGE_FALLBACK
     };
   })
 );
@@ -414,9 +483,31 @@ let cart = [];
 let dishLikes = {};
 let likedDishIds = new Set();
 let dishLikesVisitorId;
+let cardLogoObserver = null;
 let customerOrderPreferences = null;
 let customerAccount = null;
 let customerAuthMode = 'login';
+
+function downloadRestaurantContact() {
+  const contact = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Gohar Restaurant',
+    'ORG:Gohar Restaurant',
+    'TEL;TYPE=WORK,VOICE:+923339229300',
+    'URL:https://wa.me/923339229300',
+    'END:VCARD'
+  ].join('\r\n');
+  const contactUrl = URL.createObjectURL(new Blob([contact], { type: 'text/vcard;charset=utf-8' }));
+  const downloadLink = document.createElement('a');
+  downloadLink.href = contactUrl;
+  downloadLink.download = 'Gohar-Restaurant.vcf';
+  downloadLink.hidden = true;
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  downloadLink.remove();
+  window.setTimeout(() => URL.revokeObjectURL(contactUrl), 1000);
+}
 
 function markInternalPageNavigation() {
   try {
@@ -780,6 +871,8 @@ function burstLikeHearts(button) {
 }
 
 function setupDishLikeButtonInteractions() {
+  setupCardLogoReveal();
+
   document.querySelectorAll('[data-dish-like]').forEach((button) => {
     const card = button.closest('.card-flip-container');
     if (!card) return;
@@ -788,6 +881,26 @@ function setupDishLikeButtonInteractions() {
     button.addEventListener('pointerleave', () => card.classList.remove('like-interaction'));
     button.addEventListener('focus', () => card.classList.add('like-interaction'));
     button.addEventListener('blur', () => card.classList.remove('like-interaction'));
+  });
+}
+
+function setupCardLogoReveal() {
+  const cards = document.querySelectorAll('.card-flip-container');
+  if (!('IntersectionObserver' in window)) {
+    cards.forEach(card => card.classList.add('is-logo-visible'));
+    return;
+  }
+
+  if (cardLogoObserver) cardLogoObserver.disconnect();
+  cardLogoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('is-logo-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.25 });
+
+  cards.forEach(card => {
+    card.classList.remove('is-logo-visible');
+    cardLogoObserver.observe(card);
   });
 }
 
@@ -1003,7 +1116,8 @@ function renderPopularItems() {
         <!-- FRONT FACE -->
         <div class="card-front">
           <div class="card-img-wrap">
-            <img class="card-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'">
+            <img class="card-img" src="${getFoodImageUrl(item.name)}" data-fallback="${item.img || FOOD_IMAGE_FALLBACK}" alt="${item.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.dataset.fallback">
+            <span class="card-logo-splash" aria-hidden="true"><img src="/static/logo1.png" alt=""></span>
             <span class="dish-badge">Popular Choice</span>
             <span class="dish-rank">#${idx + 1}</span>
           </div>
@@ -1064,24 +1178,23 @@ function renderCategoryMenu() {
   const container = document.getElementById('categoryGrid');
   if (!container) return;
 
-  let filtered = FULL_CATEGORIZED_MENU;
+  const query = searchQuery.trim().toLowerCase();
+  const categories = MENU_CATEGORIES
+    .filter(category => activeCategory === 'ALL' || category.name === activeCategory)
+    .map(category => ({
+      ...category,
+      items: FULL_CATEGORIZED_MENU.filter(item =>
+        item.category === category.name &&
+        (!query || item.name.toLowerCase().includes(query) ||
+          item.desc.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query))
+      )
+    }))
+    .filter(category => category.items.length > 0);
 
-  if (activeCategory !== 'ALL') {
-    filtered = filtered.filter(item => item.category === activeCategory);
-  }
-
-  if (searchQuery.trim() !== '') {
-    const q = searchQuery.toLowerCase();
-    filtered = filtered.filter(item => 
-      item.name.toLowerCase().includes(q) || 
-      item.desc.toLowerCase().includes(q) ||
-      item.category.toLowerCase().includes(q)
-    );
-  }
-
-  if (filtered.length === 0) {
+  if (categories.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
+      <div class="menu-empty-state">
         <h3>No dishes found matching your search</h3>
         <p style="margin-top: 8px;">Try searching for "Broast", "Karahi", "Tikka", or "Shake"</p>
       </div>
@@ -1089,13 +1202,21 @@ function renderCategoryMenu() {
     return;
   }
 
-  container.innerHTML = filtered.map(item => `
+  container.innerHTML = categories.map(category => `
+    <section class="menu-category-section" aria-labelledby="menu-category-${category.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}">
+      <div class="menu-category-heading">
+        <h3 class="menu-category-title" id="menu-category-${category.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}">${category.name}</h3>
+        ${category.description ? `<p>${category.description}</p>` : ''}
+      </div>
+      <div class="category-items-grid">
+        ${category.items.map(item => `
     <div class="card-flip-container${item.options ? ' has-options' : ''}" onclick="this.classList.toggle('flipped')">
       <div class="card-flip-inner">
         <!-- FRONT FACE -->
         <div class="card-front">
           <div class="card-img-wrap">
-            <img class="card-img" src="${item.img || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'}" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'">
+            <img class="card-img" src="${item.img}" data-fallback="${item.imageFallback || MENU_CATEGORY_IMAGES[item.category] || FOOD_IMAGE_FALLBACK}" alt="${item.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=this.dataset.fallback">
+            <span class="card-logo-splash" aria-hidden="true"><img src="/static/logo1.png" alt=""></span>
             <span class="dish-badge">${item.category}</span>
           </div>
           <div class="card-front-body">
@@ -1137,6 +1258,9 @@ function renderCategoryMenu() {
       </div>
       ${dishLikeButtonMarkup(item.id)}
     </div>
+        `).join('')}
+      </div>
+    </section>
   `).join('');
   setupDishLikeButtonInteractions();
 }
@@ -1147,6 +1271,7 @@ function setupMenuCategoryTabs() {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
+      tabs.forEach(t => t.setAttribute('aria-pressed', String(t === tab)));
       activeCategory = tab.dataset.category || 'ALL';
       renderCategoryMenu();
     });
